@@ -1,0 +1,16 @@
+.DS_Store
+.tmp-venv/
+
+# Workspace dependencies/build
+**/node_modules/
+**/dist/
+**/.next/
+**/out/
+**/coverage/
+
+# Env and local secrets
+**/.env
+**/.env.*
+
+# Logs
+*.log
