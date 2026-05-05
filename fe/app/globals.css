@@ -1,0 +1,105 @@
+@import "tailwindcss";
+
+:root {
+  --background: #F6F6F9;
+  --foreground: #242038;
+  --xle-primary: #6A5ACD;
+  --xle-secondary: #9494FF;
+  --xle-accent: #FE7789;
+  --xle-surface: #FFFFFF;
+  --xle-muted: #F0EFFB;
+  --xle-text-secondary: #4B4568;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-xle-primary: var(--xle-primary);
+  --color-xle-secondary: var(--xle-secondary);
+  --color-xle-accent: var(--xle-accent);
+  --color-xle-surface: var(--xle-surface);
+  --color-xle-muted: var(--xle-muted);
+  --color-xle-text-secondary: var(--xle-text-secondary);
+  
+  --font-heading: var(--font-bricolage);
+  --font-sans: var(--font-inter);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading), serif;
+  letter-spacing: -0.02em;
+}
+
+.stripe-gradient {
+  background: linear-gradient(135deg, var(--xle-primary) 0%, var(--xle-secondary) 100%);
+}
+
+.stripe-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 
+    0 1px 3px rgba(0,0,0,0.08), 
+    0 20px 40px rgba(0,0,0,0.02);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stripe-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 1px 3px rgba(0,0,0,0.08), 
+    0 30px 60px rgba(0,0,0,0.05);
+}
+
+.glass-nav {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.button-primary {
+  background: var(--xle-primary);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  box-shadow: 0 4px 6px rgba(106, 90, 205, 0.2);
+  transition: all 0.2s ease;
+}
+
+.button-primary:hover {
+  background: #5a4bba;
+  transform: translateY(-1px);
+  box-shadow: 0 7px 14px rgba(106, 90, 205, 0.3);
+}
+
+.button-accent {
+  background: var(--xle-accent);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  box-shadow: 0 4px 6px rgba(254, 119, 137, 0.2);
+  transition: all 0.2s ease;
+}
+
+.button-accent:hover {
+  background: #f16d7d;
+  transform: translateY(-1px);
+  box-shadow: 0 7px 14px rgba(254, 119, 137, 0.3);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

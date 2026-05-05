@@ -1,0 +1,39 @@
+import type { Metadata } from "next";
+import { Inter, Bricolage_Grotesque } from "next/font/google";
+import "./globals.css";
+
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin", "vietnamese"],
+});
+
+const bricolage = Bricolage_Grotesque({
+  variable: "--font-bricolage",
+  subsets: ["latin", "vietnamese"],
+  weight: ["400", "500", "600", "700", "800"],
+});
+
+export const metadata: Metadata = {
+  title: "Xalo - IELTS Diagnostic Test",
+  description: "Xác định chính xác band điểm IELTS của bạn với đội ngũ giáo viên 8.0+",
+  icons: {
+    icon: "/Logo_XLE.svg",
+    shortcut: "/Logo_XLE.svg",
+    apple: "/Logo_XLE.svg",
+  },
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html
+      lang="vi"
+      className={`${inter.variable} ${bricolage.variable} h-full antialiased`}
+    >
+      <body className="min-h-full flex flex-col font-sans">{children}</body>
+    </html>
+  );
+}
