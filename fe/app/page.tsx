@@ -109,20 +109,39 @@ export default function Home() {
     <main className="relative min-h-screen">
       {/* Navigation */}
       <nav className="glass-nav sticky top-0 z-50 w-full px-6 py-4">
-        <div className="mx-auto flex max-w-7xl items-center justify-between">
-          <div className="flex items-center gap-3">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4">
+          {/* Left: Logo */}
+          <div className="flex items-center gap-2 flex-shrink-0">
             <Image 
               src="/Logo_XLE.svg" 
               alt="Xalo Logo" 
-              width={48} 
-              height={48} 
-              className="h-10 w-10 object-contain"
+              width={40} 
+              height={40} 
+              className="h-8 w-8 md:h-10 md:w-10 object-contain"
               priority
             />
-      <img src="/XALO.ENGLISH.svg" alt="Xalo Logo" width={120} height={80} />
+            <img src="/XALO.ENGLISH.svg" alt="Xalo Logo" width={100} height={30} className="hidden sm:block h-6 w-auto" />
           </div>
-          <div className="flex items-center gap-3">
-            <button onClick={scrollToForm} className="button-primary text-sm">
+
+          {/* Center: Contact Info (Visible on Desktop) */}
+          <div className="hidden lg:flex items-center gap-x-8 text-[10px] font-bold text-xle-text-secondary uppercase tracking-widest">
+            <div className="flex items-center gap-2 whitespace-nowrap">
+              <span className="text-base">📍</span>
+              <span>250 Nguyễn Đình Chính, Phú Nhuận</span>
+            </div>
+            <div className="flex items-center gap-2 whitespace-nowrap">
+              <span className="text-base">📞</span>
+              <span>078 6688 149</span>
+            </div>
+            <div className="flex items-center gap-2 whitespace-nowrap">
+              <span className="text-base">✉️</span>
+              <span className="lowercase tracking-normal">xalo.english.bddept@gmail.com</span>
+            </div>
+          </div>
+
+          {/* Right: CTA */}
+          <div className="flex items-center gap-3 flex-shrink-0">
+            <button onClick={scrollToForm} className="button-primary text-xs md:text-sm px-4 md:px-6 py-2 md:py-2.5">
               Đăng ký ngay
             </button>
           </div>
@@ -158,16 +177,7 @@ export default function Home() {
             </p>
 
             <div className="flex items-center gap-4 py-2">
-              <div className="flex -space-x-3">
-                {[1, 2, 3, 4].map((i) => (
-                  <div key={i} className="h-10 w-10 rounded-full border-2 border-white bg-xle-muted overflow-hidden">
-                    <img src={`https://i.pravatar.cc/100?img=${i+10}`} alt="avatar" />
-                  </div>
-                ))}
-                <div className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-white bg-xle-primary text-xs font-bold text-white">
-                  +2k
-                </div>
-              </div>
+
               <p className="text-sm font-medium text-xle-text-secondary">
                 <span className="font-bold text-foreground">Hơn 2,000 học viên</span> đã kiểm tra trình độ miễn phí và nhận lộ trình học phù hợp
               </p>
@@ -191,16 +201,29 @@ export default function Home() {
           </div>
 
           {/* Right Form Card */}
-          <div className="md:col-span-5">
+          <div className="md:col-span-5 relative group mt-8 md:mt-0">
+            {/* Visual highlight glow */}
+            <div className="absolute -inset-1.5 bg-gradient-to-br from-xle-primary/30 via-xle-accent/20 to-xle-primary/30 rounded-[2.5rem] opacity-70 blur-xl group-hover:opacity-100 transition-opacity duration-500" />
+            
             <section
               ref={formSectionRef}
-              className="stripe-card relative overflow-hidden p-8 md:p-10 border border-black/[0.03]"
+              className="stripe-card relative overflow-hidden p-8 md:p-10 border-2 border-xle-primary/20 shadow-[0_20px_50px_rgba(0,0,0,0.1)] bg-white/95 backdrop-blur-sm"
             >
+              {/* Promotion Badge */}
+              <div className="absolute -right-14 top-5 rotate-45 bg-xle-accent text-white py-1.5 px-14 text-[10px] font-black uppercase tracking-widest shadow-xl z-20">
+                HOT - Miễn phí
+              </div>
+
               {!isSubmitted ? (
                 <form className="space-y-6" onSubmit={handleSubmit}>
-                  <div className="space-y-2">
-                    <h2 className="text-2xl font-extrabold text-foreground">Nhận bảng chẩn bệnh miễn phí</h2>
-                    <p className="text-sm text-xle-text-secondary">Cung cấp thông tin để Xa Lộ liên hệ sắp xếp lịch kiểm tra cho bạn nhé.</p>
+                  <div className="space-y-2 relative">
+                    <div className="inline-block px-3 py-1 rounded-md bg-xle-primary/10 text-xle-primary text-[10px] font-bold uppercase tracking-widest mb-1">
+                      Đăng ký ngay tại đây
+                    </div>
+                    <h2 className="text-2xl md:text-3xl font-black text-foreground leading-tight tracking-tight">
+                      Nhận Bảng  chẩn bệnh miễn phí
+                    </h2>
+                    <p className="text-sm text-xle-text-secondary font-medium">Cung cấp thông tin để Xa Lộ liên hệ sắp xếp lịch kiểm tra cho bạn nhé.</p>
                   </div>
 
                   <div className="space-y-4">
@@ -358,7 +381,7 @@ export default function Home() {
                   <div className="space-y-3">
                     <h2 className="text-3xl font-extrabold text-foreground tracking-tight">Cảm ơn bạn!</h2>
                     <p className="text-xle-text-secondary max-w-xs mx-auto leading-relaxed">
-                      Xa Lộ đã nhận được thông tin. Đội ngũ tư vấn sẽ liên hệ với bạn trong vòng 24h để sắp xếp lịch kiểm tra phù hợp nhất nhé.
+                      Xa Lộ đã nhận được thông tin. <br/> Đội ngũ tư vấn sẽ liên hệ với bạn trong vòng 24h để sắp xếp lịch kiểm tra phù hợp nhất nhé.
                     </p>
                   </div>
                 </div>
@@ -376,7 +399,7 @@ export default function Home() {
             <p className="mt-4 text-xle-text-secondary max-w-2xl mx-auto text-lg">Hệ thống đánh giá chuyên sâu giúp bạn tiết kiệm thời gian và tối ưu hóa lộ trình đạt band điểm mong muốn.</p>
           </div>
           
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
             {[
               {
                 title: "Giáo viên 8.0+ IELTS",
@@ -388,16 +411,7 @@ export default function Home() {
                 ),
                 color: "text-blue-600 bg-blue-50"
               },
-              {
-                title: "Chấm bài thủ công 100%",
-                content: "Cam kết không sử dụng AI. Mỗi bài làm đều được chuyên gia trực tiếp đọc, nghe và phân tích từng lỗi nhỏ.",
-                icon: (
-                  <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                  </svg>
-                ),
-                color: "text-xle-primary bg-xle-muted"
-              },
+
               {
                 title: "Bảng chẩn bệnh độc quyền",
                 content: "Hệ thống phân tích chuyên sâu điểm mạnh, điểm yếu và gợi ý cải thiện cụ thể cho từng kỹ năng.",
@@ -426,14 +440,76 @@ export default function Home() {
                 <h3 className="text-xl font-extrabold mb-3 text-foreground tracking-tight">{item.title}</h3>
                 <p className="text-xle-text-secondary leading-relaxed text-[15px]">{item.content}</p>
                 
-                <div className="mt-6 flex items-center gap-2 text-xs font-bold text-xle-primary opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
-                  Tìm hiểu thêm
-                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
-                </div>
+
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Commitment Banner */}
+      <section className="relative py-20 bg-xle-primary overflow-hidden">
+        {/* Decorative elements */}
+        <div className="absolute top-0 right-0 w-64 h-64 bg-xle-accent/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-white/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
+        
+        <div className="mx-auto max-w-5xl px-6 relative z-10">
+          <div className="stripe-card p-10 md:p-16 text-center space-y-10 shadow-2xl bg-white border border-black/[0.03]">
+            <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-xle-accent text-white text-xs font-black uppercase tracking-[0.2em]">
+              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+              </svg>
+              Chấm bài 100% bởi giáo viên
+            </div>
+            
+            <div className="space-y-4">
+              <h2 className="text-6xl md:text-8xl font-black text-xle-primary leading-none tracking-tighter">
+                100%
+              </h2>
+              <h3 className="text-2xl md:text-4xl font-extrabold text-foreground uppercase tracking-tight">
+                Cam kết không sử dụng AI
+              </h3>
+              <div className="h-1 w-20 bg-xle-accent mx-auto rounded-full"></div>
+              <p className="text-lg md:text-xl font-medium text-xle-text-secondary max-w-3xl mx-auto leading-relaxed italic">
+                "Mỗi bài làm đều được chuyên gia trực tiếp đọc, nghe và phân tích chi tiết từng lỗi nhỏ nhất của bạn."
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
+              <div className="p-8 rounded-3xl bg-xle-muted/50 border border-xle-primary/5 text-left space-y-4 hover:shadow-xl transition-all duration-300 group/item">
+                <div>
+                  <h4 className="text-foreground font-bold text-lg mb-2">Sát thực tế nhất</h4>
+                  <p className="text-xle-text-secondary text-sm leading-relaxed">Kết quả phản ánh chính xác năng lực hiện tại, không bị rập khuôn bởi các thuật toán tự động.</p>
+                </div>
+              </div>
+              <div className="p-8 rounded-3xl bg-xle-muted/50 border border-xle-primary/5 text-left space-y-4 hover:shadow-xl transition-all duration-300 group/item">
+                <div>
+                  <h4 className="text-foreground font-bold text-lg mb-2">Phân tích chuyên sâu</h4>
+                  <p className="text-xle-text-secondary text-sm leading-relaxed">Giáo viên trực tiếp nhận xét từng lỗi phát âm, ngữ pháp và gợi ý cách sửa lỗi chi tiết.</p>
+                </div>
+              </div>
+              <div className="p-8 rounded-3xl bg-xle-muted/50 border border-xle-primary/5 text-left space-y-4 hover:shadow-xl transition-all duration-300 group/item">
+                <div>
+                  <h4 className="text-foreground font-bold text-lg mb-2">Lộ trình cá nhân</h4>
+                  <p className="text-xle-text-secondary text-sm leading-relaxed">Dựa trên kết quả thực tế để xây dựng phương pháp học tập tối ưu dành riêng cho bạn.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+            {/* Web_1 Image Section */}
+            <section className="bg-white py-24">
+        <div className="mx-auto max-w-full px-6">
+          <div className="relative w-full overflow-hidden rounded-2xl border border-black/[0.05] shadow-sm">
+            <Image 
+              src="/Web_1.jpg" 
+              alt="Xa Lộ English Feature" 
+              width={1920} 
+              height={1080} 
+              className="w-full h-auto object-contain"
+            />
           </div>
         </div>
       </section>
@@ -503,44 +579,17 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Web_1 Image Section */}
-      <section className="bg-white pb-24">
-        <div className="mx-auto max-w-7xl px-6">
-          <div className="relative w-full overflow-hidden rounded-2xl border border-black/[0.05] shadow-sm">
-            <Image 
-              src="/Web_1.jpg" 
-              alt="Xa Lộ English Feature" 
-              width={1920} 
-              height={1080} 
-              className="w-full h-auto object-contain"
-            />
-          </div>
-        </div>
-      </section>
 
       {/* Info Section */}
       <section className="bg-xle-muted/30 py-24">
-        <div className="mx-auto max-w-7xl px-6 space-y-12">
+        <div className="mx-auto max-w-full px-6 space-y-12">
           {/* Main Info Area */}
           <div className="space-y-8">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
               <div className="space-y-3">
                 <h2 className="text-4xl font-extrabold md:text-5xl tracking-tight">Xa Lộ English</h2>
-                <p className="text-xl font-bold text-xle-primary">Học đúng cách khi hiểu đúng mình.</p>
               </div>
-              <div className="grid grid-cols-1 gap-x-12 gap-y-3 sm:grid-cols-2">
-                {[
-                  "Chấm bài 100% thủ công",
-                  "Phân tích chuyên sâu 4 kỹ năng",
-                  "Lịch test linh hoạt",
-                  "Hỗ trợ Online & Offline"
-                ].map((item, i) => (
-                  <div key={i} className="flex items-center gap-2 font-semibold text-foreground text-sm">
-                    <div className="h-1.5 w-1.5 rounded-full bg-xle-accent" />
-                    {item}
-                  </div>
-                ))}
-              </div>
+
             </div>
             
             <div className="relative w-full aspect-[21/9] md:aspect-[3/1] overflow-hidden border border-black/[0.05]">
@@ -553,32 +602,6 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Horizontal Contact Bar */}
-          <div className="stripe-card p-8 md:p-10 bg-white border border-black/[0.03]">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-              <div className="flex items-center gap-5">
-                <div className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-2xl bg-xle-muted text-2xl shadow-inner">📍</div>
-                <div>
-                  <p className="text-[10px] uppercase tracking-widest font-bold text-xle-primary mb-1">Địa chỉ</p>
-                  <p className="text-sm font-bold text-foreground leading-tight">250 Nguyễn Đình Chính, P.11, Phú Nhuận, HCM</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-5 md:border-x border-black/[0.05] md:px-10">
-                <div className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-2xl bg-xle-muted text-2xl shadow-inner">📞</div>
-                <div>
-                  <p className="text-[10px] uppercase tracking-widest font-bold text-xle-primary mb-1">Hotline</p>
-                  <p className="text-sm font-bold text-foreground">078 6688 149</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-5 md:pl-5">
-                <div className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-2xl bg-xle-muted text-2xl shadow-inner">✉️</div>
-                <div>
-                  <p className="text-[10px] uppercase tracking-widest font-bold text-xle-primary mb-1">Email</p>
-                  <p className="text-sm font-bold text-foreground break-all">xalo.english.bddept@gmail.com</p>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </section>
 
@@ -594,7 +617,7 @@ export default function Home() {
             Bắt đầu kiểm tra trình độ <br /> IELTS của bạn ngay hôm nay
           </h2>
           <p className="mt-6 text-lg text-white/80 font-medium max-w-xl">
-            Đừng để band điểm mơ hồ cản trở giấc mơ của bạn. Nhận đánh giá chính xác từ chuyên gia ngay.
+            Đừng để band điểm mơ hồ cản trở giấc mơ của bạn. <br/> Nhận đánh giá chính xác từ chuyên gia ngay.
           </p>
           <button
             type="button"
@@ -606,10 +629,6 @@ export default function Home() {
           
           <div className="mt-16 pt-8 border-t border-white/20 w-full flex flex-col md:flex-row items-center justify-between gap-4 text-white/60 text-sm">
             <p>© 2026 Xalo Academy. All rights reserved.</p>
-            <div className="flex gap-6">
-              <a href="#" className="hover:text-white transition-colors">Điều khoản</a>
-              <a href="#" className="hover:text-white transition-colors">Bảo mật</a>
-            </div>
           </div>
         </div>
       </footer>
@@ -620,7 +639,7 @@ export default function Home() {
           target="_blank"
           rel="noreferrer"
           aria-label="Liên hệ Zalo"
-          className="flex h-12 w-12 items-center justify-center rounded-full bg-[#0068ff] text-[11px] font-bold text-white shadow-lg transition hover:scale-105"
+          className="flex h-18 w-18 items-center justify-center rounded-full bg-[#0068ff] text-[18px] font-bold text-white shadow-lg transition hover:scale-105"
         >
           Zalo
         </a>
@@ -629,7 +648,7 @@ export default function Home() {
           target="_blank"
           rel="noreferrer"
           aria-label="Liên hệ Facebook"
-          className="flex h-12 w-12 items-center justify-center rounded-full bg-[#1877f2] text-white shadow-lg transition hover:scale-105"
+          className="flex h-18 w-18 items-center justify-center rounded-full bg-[#1877f2] text-white shadow-lg transition hover:scale-105"
         >
           <svg viewBox="0 0 24 24" className="h-6 w-6 fill-current" aria-hidden="true">
             <path d="M13.5 22v-8h2.7l.4-3h-3.1V9.1c0-.9.3-1.6 1.7-1.6h1.5V4.8c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4V11H8v3h2.5v8h3z" />

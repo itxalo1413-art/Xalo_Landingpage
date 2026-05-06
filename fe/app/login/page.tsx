@@ -5,8 +5,8 @@ import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
   const router = useRouter();
-  const [email, setEmail] = useState("admin@landing.com");
-  const [password, setPassword] = useState("test@123");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -52,6 +52,7 @@ export default function LoginPage() {
               className="h-11 w-full rounded-lg border border-black/[0.1] px-3 outline-none focus:ring-2 focus:ring-xle-primary/20"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              placeholder="Nhập email"
             />
           </div>
           <div className="space-y-1">
@@ -61,6 +62,7 @@ export default function LoginPage() {
               className="h-11 w-full rounded-lg border border-black/[0.1] px-3 outline-none focus:ring-2 focus:ring-xle-primary/20"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              placeholder="Nhập mật khẩu"
             />
           </div>
 
