@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { Inter, Bricolage_Grotesque, Roboto } from "next/font/google";
+import { Google_Sans_Flex, Bricolage_Grotesque, Roboto } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({
-  variable: "--font-inter",
+const googleSansFlex = Google_Sans_Flex({
+  variable: "--font-google-sans-flex",
   subsets: ["latin", "vietnamese"],
 });
 
@@ -37,7 +37,7 @@ export default function RootLayout({
   return (
     <html
       lang="vi"
-      className={`${inter.variable} ${bricolage.variable} ${roboto.variable} h-full antialiased`}
+      className={`${googleSansFlex.variable} ${bricolage.variable} ${roboto.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-sans">{children}</body>
     </html>

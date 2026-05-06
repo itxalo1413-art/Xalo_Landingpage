@@ -124,7 +124,7 @@ export default function Home() {
           </div>
 
           {/* Center: Contact Info (Visible on Desktop) */}
-          <div className="hidden lg:flex items-center gap-x-8 text-[11px] font-bold text-xle-text-secondary uppercase tracking-tight font-roboto">
+          <div className="hidden lg:flex items-center gap-x-8 text-[11px] font-bold text-xle-text-secondary tracking-tight font-roboto">
             <div className="flex items-center gap-2 whitespace-nowrap">
               <svg className="w-4 h-4 text-xle-primary" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
@@ -163,12 +163,12 @@ export default function Home() {
         <div className="mx-auto grid max-w-7xl grid-cols-1 gap-12 px-6 md:grid-cols-12 md:gap-16">
           {/* Left Content */}
           <div className="md:col-span-7 flex flex-col justify-center space-y-8">
-            <div className="inline-flex items-center gap-3 rounded-full bg-xle-primary/10 px-6 py-2.5 text-base md:text-lg font-black text-xle-primary border border-xle-primary/20 shadow-sm self-start">
+            <div className="inline-flex items-center gap-3 rounded-full bg-xle-accent px-6 py-2.5 text-base md:text-lg font-black text-xle-primary border border-xle-primary/20 shadow-sm self-start">
               <span className="relative flex h-3 w-3">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-xle-primary opacity-75"></span>
-                <span className="relative inline-flex h-3 w-3 rounded-full bg-xle-primary"></span>
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-xle-white/10 opacity-75"></span>
+                <span className="relative inline-flex h-3 w-3 rounded-full bg-white"></span>
               </span>
-              <span className="tracking-tight uppercase">IELTS Diagnostic Test 2026</span>
+              <span className=" uppercase text-white">IELTS Diagnostic Test 2026</span>
             </div>
             
             <h1 className="text-3xl font-extrabold leading-[1.3] md:text-5xl text-foreground">
@@ -183,12 +183,12 @@ export default function Home() {
             </p>
 
             <div className="flex items-center gap-4 py-2">
-              <p className="text-base md:text-xl font-medium text-xle-text-secondary leading-relaxed">
-                <span className="font-black text-foreground  decoration-xle-accent/40 decoration-4 underline-offset-4">Hơn 2,000 học viên</span> đã kiểm tra trình độ miễn phí và nhận lộ trình học phù hợp
+              <p className="text-base md:text-xl font-normal text-xle-text-secondary leading-relaxed">
+                <span className="font-medium text-foreground  decoration-xle-accent/40 decoration-4 underline-offset-4">Hơn 2,000 học viên</span> đã kiểm tra trình độ miễn phí và nhận lộ trình học phù hợp
               </p>
             </div>
 
-            <ul className="grid grid-cols-1 gap-y-5 gap-x-8 sm:grid-cols-2">
+            <ul className="grid grid-cols-1 gap-y-5 gap-x-20 sm:grid-cols-2">
               {[
                 "Full test 4 kỹ năng",
                 "Phân tích lỗi cụ thể",
@@ -201,7 +201,7 @@ export default function Home() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={4} d="M5 13l4 4L19 7" />
                     </svg>
                   </div>
-                  <span className="font-bold text-base md:text-lg text-foreground/80">{item}</span>
+                  <span className="font-bold text-base md:text-lg text-foreground/80 whitespace-nowrap">{item}</span>
                 </li>
               ))}
             </ul>
@@ -220,7 +220,7 @@ export default function Home() {
               {!isSubmitted ? (
                 <form className="space-y-6" onSubmit={handleSubmit}>
                   <div className="space-y-2 relative text-center flex flex-col items-center">
-                    <div className="inline-block px-3 py-1 rounded-md bg-xle-primary/10 text-xle-primary text-[10px] font-bold uppercase tracking-tighter mb-1">
+                    <div className=" px-3 py-1 rounded-md text-xle-primary text-[14px] font-bold uppercase tracking-tighter mb-2">
                       Đăng ký ngay tại đây
                     </div>
                     <h2 className="text-2xl md:text-3xl font-black text-foreground leading-tight tracking-tight">
@@ -398,7 +398,7 @@ export default function Home() {
       <section className="bg-white py-24">
         <div className="mx-auto max-w-7xl px-6">
           <div className="mb-16 text-center">
-            <h2 className="text-3xl font-extrabold md:text-4xl text-foreground">TẠI SAO NÊN CHỌN TEST ĐẦU VÀO TẠI XA LỘ ENGLISH?</h2>
+            <h2 className="text-3xl font-extrabold md:text-4xl text-foreground">TẠI SAO NÊN CHỌN TEST TRÌNH ĐỘ TẠI XA LỘ ENGLISH?</h2>
             <p className="mt-4 text-xle-text-secondary max-w-2xl mx-auto text-lg">Hệ thống đánh giá chuyên sâu giúp bạn tiết kiệm thời gian và tối ưu hóa lộ trình đạt band điểm mong muốn.</p>
           </div>
           
@@ -428,19 +428,12 @@ export default function Home() {
             ].map((item, idx) => (
               <div
                 key={idx}
-                className="stripe-card relative group p-8 border border-black/[0.03] hover:border-xle-primary/20 transition-all duration-300"
-              >
-                {/* Decorative background element */}
-                <div className="absolute top-0 right-0 p-4 opacity-[0.03] group-hover:opacity-[0.07] transition-opacity">
-                  <svg className="w-24 h-24 rotate-12" fill="currentColor" viewBox="0 0 100 100">
-                    <path d="M0 100 L50 0 L100 100 Z" />
-                  </svg>
-                </div>
-                
-                <div className={`mb-6 flex h-14 w-14 items-center justify-center rounded-2xl ${item.color} group-hover:scale-110 transition-transform duration-500`}>
+                className="stripe-card relative group p-10 border border-black/[0.03] hover:border-xle-primary/20 transition-all duration-300 text-center flex flex-col items-center"
+              >        
+                <div className={`mb-6 flex h-16 w-16 items-center justify-center rounded-2xl ${item.color} group-hover:scale-110 transition-transform duration-500 shadow-sm`}>
                   {item.icon}
                 </div>
-                <h3 className="text-xl font-extrabold mb-3 text-foreground tracking-tight">{item.title}</h3>
+                <h3 className="text-xl font-extrabold mb-3 text-foreground tracking-tight items-center justify-center">{item.title}</h3>
                 <p className="text-xle-text-secondary leading-relaxed text-[15px]">{item.content}</p>
                 
 
@@ -452,13 +445,10 @@ export default function Home() {
 
       {/* Commitment Banner */}
       <section className="relative py-20 bg-xle-primary overflow-hidden">
-        {/* Decorative elements */}
-        <div className="absolute top-0 right-0 w-64 h-64 bg-xle-accent/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-        <div className="absolute bottom-0 left-0 w-64 h-64 bg-white/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
-        
+
         <div className="mx-auto max-w-5xl px-6 relative z-10">
           <div className="stripe-card p-10 md:p-16 text-center space-y-10 shadow-2xl bg-white border border-black/[0.03]">
-            <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-xle-accent text-white text-xs font-black uppercase tracking-tighter">
+            <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-xle-accent text-white text-xs font-black uppercase tracking-tight">
               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
               </svg>
@@ -481,19 +471,19 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
               <div className="p-8 rounded-3xl bg-xle-muted/50 border border-xle-primary/5 text-left space-y-4 hover:shadow-xl transition-all duration-300 group/item">
                 <div>
-                  <h4 className="text-foreground font-bold text-lg mb-2">Sát thực tế nhất</h4>
+                  <p className="text-xle-text-secondary font-bold text-lg mb-2">Sát thực tế nhất</p>
                   <p className="text-xle-text-secondary text-sm leading-relaxed">Kết quả phản ánh chính xác năng lực hiện tại, không bị rập khuôn bởi các thuật toán tự động.</p>
                 </div>
               </div>
               <div className="p-8 rounded-3xl bg-xle-muted/50 border border-xle-primary/5 text-left space-y-4 hover:shadow-xl transition-all duration-300 group/item">
                 <div>
-                  <h4 className="text-foreground font-bold text-lg mb-2">Phân tích chuyên sâu</h4>
+                  <p className="text-xle-text-secondary font-bold text-lg mb-2">Phân tích chuyên sâu</p>
                   <p className="text-xle-text-secondary text-sm leading-relaxed">Giáo viên trực tiếp nhận xét từng lỗi phát âm, ngữ pháp và gợi ý cách sửa lỗi chi tiết.</p>
                 </div>
               </div>
               <div className="p-8 rounded-3xl bg-xle-muted/50 border border-xle-primary/5 text-left space-y-4 hover:shadow-xl transition-all duration-300 group/item">
                 <div>
-                  <h4 className="text-foreground font-bold text-lg mb-2">Lộ trình cá nhân</h4>
+                  <p className="text-xle-text-secondary font-bold text-lg mb-2">Lộ trình cá nhân</p>
                   <p className="text-xle-text-secondary text-sm leading-relaxed">Dựa trên kết quả thực tế để xây dựng phương pháp học tập tối ưu dành riêng cho bạn.</p>
                 </div>
               </div>
@@ -504,10 +494,10 @@ export default function Home() {
 
             {/* Web_1 Image Section */}
             <section className="bg-white py-24">
-        <div className="mx-auto max-w-full px-6">
+        <div className="mx-auto max-w-7xl px-6">
           <div className="relative w-full overflow-hidden rounded-2xl border border-black/[0.05] shadow-sm">
             <Image 
-              src="/Web_1.jpg" 
+              src="/Web_1.png" 
               alt="Xa Lộ English Feature" 
               width={1920} 
               height={1080} 
@@ -521,7 +511,7 @@ export default function Home() {
       <section className="bg-white pb-24">
         <div className="mx-auto max-w-7xl px-6">
           <div className="mb-12 text-center">
-            <span className="text-xle-primary font-black tracking-tight uppercase text-xl md:text-2xl">KẾT QUẢ MẪU</span>
+            <span className="text-xle-primary font-black tracking-tight uppercase text-lg md:text-xl">KẾT QUẢ MẪU</span>
             <h2 className="mt-2 text-3xl font-extrabold md:text-4xl text-foreground">Bảng Chẩn Bệnh thực tế</h2>
             <p className="mt-4 text-xle-text-secondary max-w-2xl mx-auto">
               Khám phá Bảng Chẩn Bệnh: Không chỉ trả điểm, Xa Lộ English chỉ rõ lỗ hổng của bạn.
@@ -584,19 +574,18 @@ export default function Home() {
 
 
       {/* Info Section */}
-      <section className="bg-xle-muted/30 py-24">
+      <section className="bg-xle-muted/30 mb-12">
         <div className="mx-auto max-w-full space-y-12">
           {/* Main Info Area */}
           <div className="space-y-8">
             <div className="px-6 flex flex-col md:flex-row md:items-end justify-between gap-8">
               <div className="space-y-3">
-                <h2 className="text-4xl font-extrabold md:text-5xl tracking-tight">Xa Lộ English</h2>
               </div>
             </div>
             
             <div className="relative w-full border-y border-black/[0.05]">
               <Image 
-                src="/fbcover.png" 
+                src="/Web_2.png" 
                 alt="Xa Lộ English Facebook Cover" 
                 width={1920}
                 height={640}
@@ -609,11 +598,11 @@ export default function Home() {
 
       {/* Footer CTA */}
       <footer className="stripe-gradient py-16 text-white overflow-hidden relative">
-        <div className="absolute top-0 left-0 w-full h-full opacity-10">
+        {/* <div className="absolute top-0 left-0 w-full h-full opacity-10">
           <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
             <path d="M0 100 L50 0 L100 100 Z" fill="white" />
           </svg>
-        </div>
+        </div> */}
         <div className="mx-auto relative z-10 flex max-w-4xl flex-col items-center text-center px-6">
           <h2 className="text-3xl font-extrabold md:text-5xl leading-tight">
             Bắt đầu kiểm tra trình độ <br /> IELTS của bạn ngay hôm nay
