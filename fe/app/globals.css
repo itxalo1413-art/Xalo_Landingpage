@@ -23,6 +23,7 @@
   
   --font-heading: var(--font-bricolage);
   --font-sans: var(--font-inter);
+  --font-roboto: var(--font-roboto);
 }
 
 body {

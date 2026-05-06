@@ -124,17 +124,23 @@ export default function Home() {
           </div>
 
           {/* Center: Contact Info (Visible on Desktop) */}
-          <div className="hidden lg:flex items-center gap-x-8 text-[10px] font-bold text-xle-text-secondary uppercase tracking-widest">
+          <div className="hidden lg:flex items-center gap-x-8 text-[11px] font-bold text-xle-text-secondary uppercase tracking-wider font-roboto">
             <div className="flex items-center gap-2 whitespace-nowrap">
-              <span className="text-base">📍</span>
+              <svg className="w-4 h-4 text-xle-primary" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+              </svg>
               <span>250 Nguyễn Đình Chính, Phú Nhuận</span>
             </div>
             <div className="flex items-center gap-2 whitespace-nowrap">
-              <span className="text-base">📞</span>
+              <svg className="w-4 h-4 text-xle-primary" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
+              </svg>
               <span>078 6688 149</span>
             </div>
             <div className="flex items-center gap-2 whitespace-nowrap">
-              <span className="text-base">✉️</span>
+              <svg className="w-4 h-4 text-xle-primary" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+              </svg>
               <span className="lowercase tracking-normal">xalo.english.bddept@gmail.com</span>
             </div>
           </div>
@@ -157,12 +163,12 @@ export default function Home() {
         <div className="mx-auto grid max-w-7xl grid-cols-1 gap-12 px-6 md:grid-cols-12 md:gap-16">
           {/* Left Content */}
           <div className="md:col-span-7 flex flex-col justify-center space-y-8">
-            <div className="inline-flex items-center gap-2 rounded-full bg-xle-muted px-4 py-1.5 text-sm font-semibold text-xle-primary">
-              <span className="relative flex h-2 w-2">
+            <div className="inline-flex items-center gap-3 rounded-full bg-xle-primary/10 px-6 py-2.5 text-base md:text-lg font-black text-xle-primary border border-xle-primary/20 shadow-sm self-start">
+              <span className="relative flex h-3 w-3">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-xle-primary opacity-75"></span>
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-xle-primary"></span>
+                <span className="relative inline-flex h-3 w-3 rounded-full bg-xle-primary"></span>
               </span>
-              IELTS Diagnostic Test 2026
+              <span className="tracking-tight uppercase">IELTS Diagnostic Test 2026</span>
             </div>
             
             <h1 className="text-3xl font-extrabold leading-[1.3] md:text-5xl text-foreground">
@@ -177,24 +183,25 @@ export default function Home() {
             </p>
 
             <div className="flex items-center gap-4 py-2">
-
-              <p className="text-sm font-medium text-xle-text-secondary">
-                <span className="font-bold text-foreground">Hơn 2,000 học viên</span> đã kiểm tra trình độ miễn phí và nhận lộ trình học phù hợp
+              <p className="text-base md:text-xl font-medium text-xle-text-secondary leading-relaxed">
+                <span className="font-black text-foreground underline decoration-xle-accent/40 decoration-4 underline-offset-4">Hơn 2,000 học viên</span> đã kiểm tra trình độ miễn phí và nhận lộ trình học phù hợp
               </p>
             </div>
 
-            <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <ul className="grid grid-cols-1 gap-y-5 gap-x-8 sm:grid-cols-2">
               {[
                 "Full test 4 kỹ năng",
                 "Phân tích lỗi cụ thể",
                 "Hình thức linh hoạt: online & offline",
                 "Nhận kết quả thật"
               ].map((item, idx) => (
-                <li key={idx} className="flex items-center gap-3 text-xle-text-secondary">
-                  <svg className="h-5 w-5 text-xle-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                  </svg>
-                  <span className="font-medium">{item}</span>
+                <li key={idx} className="flex items-center gap-4 text-xle-text-secondary group/li">
+                  <div className="flex-shrink-0 flex h-8 w-8 items-center justify-center rounded-full bg-xle-primary/10 group-hover/li:bg-xle-primary/20 transition-colors">
+                    <svg className="h-4 w-4 text-xle-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={4} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <span className="font-bold text-base md:text-lg text-foreground/80">{item}</span>
                 </li>
               ))}
             </ul>
@@ -209,10 +216,6 @@ export default function Home() {
               ref={formSectionRef}
               className="stripe-card relative overflow-hidden p-8 md:p-10 border-2 border-xle-primary/20 shadow-[0_20px_50px_rgba(0,0,0,0.1)] bg-white/95 backdrop-blur-sm"
             >
-              {/* Promotion Badge */}
-              <div className="absolute -right-14 top-5 rotate-45 bg-xle-accent text-white py-1.5 px-14 text-[10px] font-black uppercase tracking-widest shadow-xl z-20">
-                HOT - Miễn phí
-              </div>
 
               {!isSubmitted ? (
                 <form className="space-y-6" onSubmit={handleSubmit}>
@@ -221,7 +224,7 @@ export default function Home() {
                       Đăng ký ngay tại đây
                     </div>
                     <h2 className="text-2xl md:text-3xl font-black text-foreground leading-tight tracking-tight">
-                      Nhận Bảng  chẩn bệnh miễn phí
+                      Nhận Bảng Chẩn Bệnh <br/>miễn phí
                     </h2>
                     <p className="text-sm text-xle-text-secondary font-medium">Cung cấp thông tin để Xa Lộ liên hệ sắp xếp lịch kiểm tra cho bạn nhé.</p>
                   </div>
@@ -360,7 +363,7 @@ export default function Home() {
                         Đang xử lý...
                       </>
                     ) : (
-                      "Nhận bảng chẩn bệnh miễn phí"
+                      "Nhận Bảng Chẩn Bệnh miễn phí"
                     )}
                   </button>
                   
@@ -413,7 +416,7 @@ export default function Home() {
               },
 
               {
-                title: "Bảng chẩn bệnh độc quyền",
+                title: "Bảng Chẩn Bệnh độc quyền",
                 content: "Hệ thống phân tích chuyên sâu điểm mạnh, điểm yếu và gợi ý cải thiện cụ thể cho từng kỹ năng.",
                 icon: (
                   <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -519,9 +522,9 @@ export default function Home() {
         <div className="mx-auto max-w-7xl px-6">
           <div className="mb-12 text-center">
             <span className="text-xle-primary font-bold tracking-widest uppercase text-sm">Kết quả mẫu</span>
-            <h2 className="mt-2 text-3xl font-extrabold md:text-4xl text-foreground">Bảng chẩn bệnh thực tế</h2>
+            <h2 className="mt-2 text-3xl font-extrabold md:text-4xl text-foreground">Bảng Chẩn Bệnh thực tế</h2>
             <p className="mt-4 text-xle-text-secondary max-w-2xl mx-auto">
-              Xem trước định dạng bảng chẩn bệnh chi tiết mà bạn sẽ nhận được sau khi hoàn thành bài test.
+              Xem trước định dạng Bảng Chẩn Bệnh chi tiết mà bạn sẽ nhận được sau khi hoàn thành bài test.
             </p>
           </div>
 
@@ -544,7 +547,7 @@ export default function Home() {
                 <div className="relative stripe-card overflow-hidden border border-black/[0.05] aspect-video shadow-sm group-hover:shadow-md transition-all duration-300">
                   <Image 
                     src={item.src} 
-                    alt={`Bảng chẩn bệnh ${item.name}`} 
+                    alt={`Bảng Chẩn Bệnh ${item.name}`} 
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
                   />
