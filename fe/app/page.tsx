@@ -184,7 +184,7 @@ export default function Home() {
 
             <div className="flex items-center gap-4 py-2">
               <p className="text-base md:text-xl font-medium text-xle-text-secondary leading-relaxed">
-                <span className="font-black text-foreground underline decoration-xle-accent/40 decoration-4 underline-offset-4">Hơn 2,000 học viên</span> đã kiểm tra trình độ miễn phí và nhận lộ trình học phù hợp
+                <span className="font-black text-foreground  decoration-xle-accent/40 decoration-4 underline-offset-4">Hơn 2,000 học viên</span> đã kiểm tra trình độ miễn phí và nhận lộ trình học phù hợp
               </p>
             </div>
 
@@ -398,14 +398,14 @@ export default function Home() {
       <section className="bg-white py-24">
         <div className="mx-auto max-w-7xl px-6">
           <div className="mb-16 text-center">
-            <h2 className="text-3xl font-extrabold md:text-4xl text-foreground">Tại sao chọn Xa Lộ English</h2>
+            <h2 className="text-3xl font-extrabold md:text-4xl text-foreground">TẠI SAO NÊN CHỌN TEST ĐẦU VÀO TẠI XA LỘ ENGLISH?</h2>
             <p className="mt-4 text-xle-text-secondary max-w-2xl mx-auto text-lg">Hệ thống đánh giá chuyên sâu giúp bạn tiết kiệm thời gian và tối ưu hóa lộ trình đạt band điểm mong muốn.</p>
           </div>
           
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
             {[
               {
-                title: "Giáo viên 8.0+ IELTS",
+                title: "Chấm trực tiếp bởi Giáo viên 8.0+ IELTS",
                 content: "Đội ngũ chuyên gia có từ 5-10 năm kinh nghiệm giảng dạy và am hiểu sâu sắc tiêu chí chấm thi quốc tế.",
                 icon: (
                   <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -462,7 +462,7 @@ export default function Home() {
               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
               </svg>
-              Chấm bài 100% bởi giáo viên
+              Chấm bài trực tiếp bởi giáo viên
             </div>
             
             <div className="space-y-4">
@@ -518,13 +518,13 @@ export default function Home() {
       </section>
 
       {/* Visual Proof Section */}
-      <section className="bg-white pb-24 overflow-hidden">
+      <section className="bg-white pb-24">
         <div className="mx-auto max-w-7xl px-6">
           <div className="mb-12 text-center">
-            <span className="text-xle-primary font-bold tracking-widest uppercase text-sm">Kết quả mẫu</span>
+            <span className="text-xle-primary font-black tracking-tight uppercase text-xl md:text-2xl">KẾT QUẢ MẪU</span>
             <h2 className="mt-2 text-3xl font-extrabold md:text-4xl text-foreground">Bảng Chẩn Bệnh thực tế</h2>
             <p className="mt-4 text-xle-text-secondary max-w-2xl mx-auto">
-              Xem trước định dạng Bảng Chẩn Bệnh chi tiết mà bạn sẽ nhận được sau khi hoàn thành bài test.
+              Khám phá Bảng Chẩn Bệnh: Không chỉ trả điểm, Xa Lộ English chỉ rõ lỗ hổng của bạn.
             </p>
           </div>
 
@@ -627,7 +627,7 @@ export default function Home() {
             onClick={scrollToForm}
             className="button-accent mt-10 h-16 px-12 text-lg shadow-xl hover:shadow-2xl hover:scale-105"
           >
-            Đăng kí test miễn phí ngay
+            Đăng ký nhận Bảng Chẩn Bệnh miễn phí ngay
           </button>
           
           <div className="mt-16 pt-8 border-t border-white/20 w-full flex flex-col md:flex-row items-center justify-between gap-4 text-white/60 text-sm">
