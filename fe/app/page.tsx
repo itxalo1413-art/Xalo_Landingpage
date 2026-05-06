@@ -168,7 +168,7 @@ export default function Home() {
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-xle-white/10 opacity-75"></span>
                 <span className="relative inline-flex h-3 w-3 rounded-full bg-white"></span>
               </span>
-              <span className=" uppercase text-white">IELTS Diagnostic Test 2026</span>
+              <span className=" uppercase font-bold text-white">IELTS Diagnostic Test 2026</span>
             </div>
             
             <h1 className="text-3xl font-extrabold leading-[1.3] md:text-5xl text-foreground">
@@ -220,7 +220,7 @@ export default function Home() {
               {!isSubmitted ? (
                 <form className="space-y-6" onSubmit={handleSubmit}>
                   <div className="space-y-2 relative text-center flex flex-col items-center">
-                    <div className=" px-3 py-1 rounded-md text-xle-primary text-[14px] font-bold uppercase tracking-tighter mb-2">
+                    <div className=" px-3 py-1 rounded-md text-xle-primary text-[14px] font-bold uppercase tracking-tight mb-2">
                       Đăng ký ngay tại đây
                     </div>
                     <h2 className="text-2xl md:text-3xl font-black text-foreground leading-tight tracking-tight">
@@ -367,7 +367,7 @@ export default function Home() {
                     )}
                   </button>
                   
-                  <p className="text-center text-[10px] text-xle-text-secondary uppercase tracking-tighter font-bold">
+                  <p className="text-center text-[10px] text-xle-text-secondary uppercase tracking-tight font-bold">
                     Thông tin của bạn được bảo mật tuyệt đối
                   </p>
                   {submitError && (
@@ -433,7 +433,7 @@ export default function Home() {
                 <div className={`mb-6 flex h-16 w-16 items-center justify-center rounded-2xl ${item.color} group-hover:scale-110 transition-transform duration-500 shadow-sm`}>
                   {item.icon}
                 </div>
-                <h3 className="text-xl font-extrabold mb-3 text-foreground tracking-tight items-center justify-center">{item.title}</h3>
+                <p className="text-xl text-xle-text-secondary font-extrabold mb-3 text-foreground tracking-tight items-center justify-center">{item.title}</p>
                 <p className="text-xle-text-secondary leading-relaxed text-[15px]">{item.content}</p>
                 
 
@@ -448,7 +448,7 @@ export default function Home() {
 
         <div className="mx-auto max-w-5xl px-6 relative z-10">
           <div className="stripe-card p-10 md:p-16 text-center space-y-10 shadow-2xl bg-white border border-black/[0.03]">
-            <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-xle-accent text-white text-xs font-black uppercase tracking-tight">
+            <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-xle-accent text-white text-xs font-bold uppercase tracking-tight">
               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
               </svg>
@@ -574,7 +574,7 @@ export default function Home() {
 
 
       {/* Info Section */}
-      <section className="bg-xle-muted/30 mb-12">
+      <section className="bg-[#f6f6f9] mb-2">
         <div className="mx-auto max-w-full space-y-12">
           {/* Main Info Area */}
           <div className="space-y-8">
@@ -583,7 +583,7 @@ export default function Home() {
               </div>
             </div>
             
-            <div className="relative w-full border-y border-black/[0.05]">
+            <div className="relative w-full">
               <Image 
                 src="/Web_2.png" 
                 alt="Xa Lộ English Facebook Cover" 
@@ -629,7 +629,7 @@ export default function Home() {
           {/* Decorative glow behind the label */}
           <div className="absolute -inset-1 bg-gradient-to-r from-xle-primary to-xle-accent rounded-full blur opacity-20 group-hover:opacity-40 transition-opacity duration-500" />
           
-          <span className="relative flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/95 backdrop-blur-md text-[10px] font-black uppercase tracking-tighter text-xle-primary shadow-xl border border-xle-primary/10">
+          <span className="relative flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/95 backdrop-blur-md text-[10px] font-black uppercase tracking-tight text-xle-primary shadow-xl border border-xle-primary/10">
             {/* Pulsing indicator */}
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
