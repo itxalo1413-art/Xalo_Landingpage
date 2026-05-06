@@ -124,12 +124,12 @@ export default function Home() {
           </div>
 
           {/* Center: Contact Info (Visible on Desktop) */}
-          <div className="hidden lg:flex items-center gap-x-8 text-[11px] font-bold text-xle-text-secondary uppercase tracking-wider font-roboto">
+          <div className="hidden lg:flex items-center gap-x-8 text-[11px] font-bold text-xle-text-secondary uppercase tracking-tight font-roboto">
             <div className="flex items-center gap-2 whitespace-nowrap">
               <svg className="w-4 h-4 text-xle-primary" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
               </svg>
-              <span>250 Nguyễn Đình Chính, Phú Nhuận</span>
+              <span>250 Nguyễn Đình Chính, Phú Nhuận, TP. Hồ Chí Minh</span>
             </div>
             <div className="flex items-center gap-2 whitespace-nowrap">
               <svg className="w-4 h-4 text-xle-primary" viewBox="0 0 24 24" fill="currentColor">
@@ -219,19 +219,19 @@ export default function Home() {
 
               {!isSubmitted ? (
                 <form className="space-y-6" onSubmit={handleSubmit}>
-                  <div className="space-y-2 relative">
-                    <div className="inline-block px-3 py-1 rounded-md bg-xle-primary/10 text-xle-primary text-[10px] font-bold uppercase tracking-widest mb-1">
+                  <div className="space-y-2 relative text-center flex flex-col items-center">
+                    <div className="inline-block px-3 py-1 rounded-md bg-xle-primary/10 text-xle-primary text-[10px] font-bold uppercase tracking-tighter mb-1">
                       Đăng ký ngay tại đây
                     </div>
                     <h2 className="text-2xl md:text-3xl font-black text-foreground leading-tight tracking-tight">
                       Nhận Bảng Chẩn Bệnh <br/>miễn phí
                     </h2>
-                    <p className="text-sm text-xle-text-secondary font-medium">Cung cấp thông tin chính xác để Xa Lộ English có thể liên hệ sắp xếp lịch kiểm tra cho bạn sớm nhé.</p>
+                    <p className="text-sm text-xle-text-secondary font-medium max-w-sm">Cung cấp thông tin chính xác để Xa Lộ English có thể liên hệ sắp xếp lịch kiểm tra cho bạn sớm nhé.</p>
                   </div>
 
                   <div className="space-y-4">
                     <div className="space-y-1.5">
-                      <label className="text-xs font-bold uppercase tracking-wider text-xle-text-secondary" htmlFor="fullName">
+                      <label className="text-xs font-bold uppercase tracking-tight text-xle-text-secondary" htmlFor="fullName">
                         Họ và tên
                       </label>
                       <input
@@ -250,7 +250,7 @@ export default function Home() {
                     </div>
 
                     <div className="space-y-1.5">
-                      <label className="text-xs font-bold uppercase tracking-wider text-xle-text-secondary" htmlFor="phone">
+                      <label className="text-xs font-bold uppercase tracking-tight text-xle-text-secondary" htmlFor="phone">
                         Số điện thoại
                       </label>
                       <input
@@ -273,7 +273,7 @@ export default function Home() {
                     </div>
 
                     <div className="space-y-1.5">
-                      <label className="text-xs font-bold uppercase tracking-wider text-xle-text-secondary" htmlFor="email">
+                      <label className="text-xs font-bold uppercase tracking-tight text-xle-text-secondary" htmlFor="email">
                         Email
                       </label>
                       <input
@@ -292,7 +292,7 @@ export default function Home() {
 
                     <div className="space-y-1.5">
                       <label
-                        className="text-xs font-bold uppercase tracking-wider text-xle-text-secondary"
+                        className="text-xs font-bold uppercase tracking-tight text-xle-text-secondary"
                         htmlFor="motivation"
                       >
                         Mục đích học tiếng Anh/ IELTS của bạn
@@ -326,7 +326,7 @@ export default function Home() {
                     {form.motivation === "Lí do khác" && (
                       <div className="space-y-1.5">
                         <label
-                          className="text-xs font-bold uppercase tracking-wider text-xle-text-secondary"
+                          className="text-xs font-bold uppercase tracking-tight text-xle-text-secondary"
                           htmlFor="otherReason"
                         >
                           Lí do khác
@@ -367,7 +367,7 @@ export default function Home() {
                     )}
                   </button>
                   
-                  <p className="text-center text-[10px] text-xle-text-secondary uppercase tracking-widest font-bold">
+                  <p className="text-center text-[10px] text-xle-text-secondary uppercase tracking-tighter font-bold">
                     Thông tin của bạn được bảo mật tuyệt đối
                   </p>
                   {submitError && (
@@ -458,7 +458,7 @@ export default function Home() {
         
         <div className="mx-auto max-w-5xl px-6 relative z-10">
           <div className="stripe-card p-10 md:p-16 text-center space-y-10 shadow-2xl bg-white border border-black/[0.03]">
-            <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-xle-accent text-white text-xs font-black uppercase tracking-[0.2em]">
+            <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-xle-accent text-white text-xs font-black uppercase tracking-tighter">
               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
               </svg>
@@ -554,7 +554,7 @@ export default function Home() {
                   
                   {idx === 8 ? (
                     <div className="absolute inset-0 bg-black/60 backdrop-blur-[1px] flex flex-col items-center justify-center text-center p-4 z-10">
-                      <p className="text-white font-extrabold text-sm md:text-lg leading-tight uppercase tracking-wider">
+                      <p className="text-white font-extrabold text-sm md:text-lg leading-tight uppercase tracking-tight">
                         Và hàng ngàn <br/> kết quả khác...
                       </p>
                       <div className="mt-3 h-0.5 w-8 bg-xle-accent"></div>
@@ -585,26 +585,25 @@ export default function Home() {
 
       {/* Info Section */}
       <section className="bg-xle-muted/30 py-24">
-        <div className="mx-auto max-w-full px-6 space-y-12">
+        <div className="mx-auto max-w-full space-y-12">
           {/* Main Info Area */}
           <div className="space-y-8">
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
+            <div className="px-6 flex flex-col md:flex-row md:items-end justify-between gap-8">
               <div className="space-y-3">
                 <h2 className="text-4xl font-extrabold md:text-5xl tracking-tight">Xa Lộ English</h2>
               </div>
-
             </div>
             
-            <div className="relative w-full aspect-[21/9] md:aspect-[3/1] overflow-hidden border border-black/[0.05]">
+            <div className="relative w-full border-y border-black/[0.05]">
               <Image 
-                src="/Facebook Cover.jpg" 
+                src="/fbcover.png" 
                 alt="Xa Lộ English Facebook Cover" 
-                fill 
-                className="object-cover"
+                width={1920}
+                height={640}
+                className="w-full h-auto block"
               />
             </div>
           </div>
-
         </div>
       </section>
 
@@ -636,7 +635,20 @@ export default function Home() {
         </div>
       </footer>
 
-      <div className="fixed bottom-5 right-5 z-50 flex flex-col gap-3">
+      <div className="fixed bottom-6 right-6 z-50 flex flex-col items-center gap-3 group">
+        <div className="relative">
+          {/* Decorative glow behind the label */}
+          <div className="absolute -inset-1 bg-gradient-to-r from-xle-primary to-xle-accent rounded-full blur opacity-20 group-hover:opacity-40 transition-opacity duration-500" />
+          
+          <span className="relative flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/95 backdrop-blur-md text-[10px] font-black uppercase tracking-tighter text-xle-primary shadow-xl border border-xle-primary/10">
+            {/* Pulsing indicator */}
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+            </span>
+            Liên hệ Xa Lộ English:
+          </span>
+        </div>
         <a
           href="https://zalo.me/0354943544"
           target="_blank"
