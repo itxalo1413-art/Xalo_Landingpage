@@ -162,7 +162,7 @@ export default function Home() {
         
         <div className="mx-auto grid max-w-7xl grid-cols-1 gap-12 px-6 md:grid-cols-12 md:gap-16">
           {/* Left Content */}
-          <div className="md:col-span-7 flex flex-col justify-center space-y-8">
+          <div className="md:col-span-7 flex flex-col justify-center space-y-6 md:space-y-10">
             <div className="inline-flex items-center gap-3 rounded-full bg-xle-accent px-6 py-2.5 text-base md:text-lg font-black text-xle-primary border border-xle-primary/20 shadow-sm self-start">
               <span className="relative flex h-3 w-3">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-xle-white/10 opacity-75"></span>
@@ -395,14 +395,14 @@ export default function Home() {
       </section>
 
       {/* Proof Section */}
-      <section className="bg-white py-24">
+      <section className="bg-white py-16 md:py-24">
         <div className="mx-auto max-w-7xl px-6">
-          <div className="mb-16 text-center">
-            <h2 className="text-3xl font-extrabold md:text-4xl text-foreground">TẠI SAO NÊN CHỌN TEST TRÌNH ĐỘ TẠI XA LỘ ENGLISH?</h2>
-            <p className="mt-4 text-xle-text-secondary max-w-2xl mx-auto text-lg">Hệ thống đánh giá chuyên sâu giúp bạn tiết kiệm thời gian và tối ưu hóa lộ trình đạt band điểm mong muốn.</p>
+          <div className="mb-12 md:mb-16 text-center">
+            <h2 className="text-2xl md:text-4xl font-extrabold text-foreground leading-tight">TẠI SAO NÊN CHỌN TEST TRÌNH ĐỘ TẠI XA LỘ ENGLISH?</h2>
+            <p className="mt-4 text-xle-text-secondary max-w-2xl mx-auto text-base md:text-lg">Hệ thống đánh giá chuyên sâu giúp bạn tiết kiệm thời gian và tối ưu hóa lộ trình đạt band điểm mong muốn.</p>
           </div>
           
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+          <div className="grid grid-cols-1 gap-6 md:gap-8 md:grid-cols-2">
             {[
               {
                 title: "Chấm trực tiếp bởi Giáo viên 8.0+ IELTS",
@@ -428,15 +428,15 @@ export default function Home() {
             ].map((item, idx) => (
               <div
                 key={idx}
-                className="stripe-card relative group p-10 border border-black/[0.03] hover:border-xle-primary/20 transition-all duration-300 text-center flex flex-col items-center"
+                className="flex flex-row items-start gap-5 p-2 md:p-10 md:stripe-card md:border md:border-black/[0.03] md:text-center md:flex-col md:items-center group transition-all duration-300 md:bg-white md:shadow-sm"
               >        
-                <div className={`mb-6 flex h-16 w-16 items-center justify-center rounded-2xl ${item.color} group-hover:scale-110 transition-transform duration-500 shadow-sm`}>
+                <div className={`flex-shrink-0 flex h-14 w-14 md:h-16 md:w-16 items-center justify-center rounded-2xl ${item.color} group-hover:scale-110 transition-transform duration-500 shadow-sm md:mb-6`}>
                   {item.icon}
                 </div>
-                <p className="text-xl text-xle-text-secondary font-bold mb-3 text-foreground tracking-tight items-center justify-center">{item.title}</p>
-                <p className="text-xle-text-secondary leading-relaxed text-[15px]">{item.content}</p>
-                
-
+                <div className="flex flex-col md:items-center">
+                  <h3 className="text-lg md:text-xl font-extrabold mb-2 md:mb-3 text-foreground tracking-tight">{item.title}</h3>
+                  <p className="text-xle-text-secondary leading-relaxed text-sm md:text-[15px]">{item.content}</p>
+                </div>
               </div>
             ))}
           </div>
@@ -445,7 +445,6 @@ export default function Home() {
 
       {/* Commitment Banner */}
       <section className="relative py-20 bg-xle-primary overflow-hidden">
-
         <div className="mx-auto max-w-5xl px-6 relative z-10">
           <div className="stripe-card p-10 md:p-16 text-center space-y-10 shadow-2xl bg-white border border-black/[0.03]">
             <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-xle-accent text-white text-xs font-bold uppercase tracking-tight">
@@ -508,9 +507,9 @@ export default function Home() {
       </section>
 
       {/* Visual Proof Section */}
-      <section className="bg-white pb-24">
+      <section className="bg-white pb-12 md:pb-24">
         <div className="mx-auto max-w-7xl px-6">
-          <div className="mb-12 text-center">
+          <div className="mb-8 md:mb-12 text-center">
             <span className="text-xle-primary font-black tracking-tight uppercase text-lg md:text-xl">KẾT QUẢ MẪU</span>
             <h2 className="mt-2 text-3xl font-extrabold md:text-4xl text-foreground">Bảng Chẩn Bệnh thực tế</h2>
             <p className="mt-4 text-xle-text-secondary max-w-2xl mx-auto">
@@ -574,10 +573,10 @@ export default function Home() {
 
 
       {/* Info Section */}
-      <section className="bg-[#f6f6f9] mb-2">
-        <div className="mx-auto max-w-full space-y-12">
+      <section className="bg-[#f6f6f9] py-8 md:py-16">
+        <div className="mx-auto max-w-full space-y-6 md:space-y-12">
           {/* Main Info Area */}
-          <div className="space-y-8">
+          <div className="space-y-4 md:space-y-8">
             <div className="px-6 flex flex-col md:flex-row md:items-end justify-between gap-8">
               <div className="space-y-3">
               </div>
@@ -604,16 +603,16 @@ export default function Home() {
           </svg>
         </div> */}
         <div className="mx-auto relative z-10 flex max-w-4xl flex-col items-center text-center px-6">
-          <h2 className="text-3xl font-extrabold md:text-5xl leading-tight">
+          <h2 className="text-2xl md:text-5xl font-extrabold leading-tight">
             Bắt đầu kiểm tra trình độ <br /> IELTS của bạn ngay hôm nay
           </h2>
-          <p className="mt-6 text-lg text-white/80 font-medium max-w-xl">
+          <p className="mt-4 text-base md:text-lg text-white/80 font-medium max-w-xl">
             Đừng để band điểm mơ hồ cản trở giấc mơ của bạn. <br/> Nhận đánh giá chính xác từ chuyên gia ngay.
           </p>
           <button
             type="button"
             onClick={scrollToForm}
-            className="button-accent mt-10 h-16 px-12 text-lg shadow-xl hover:shadow-2xl hover:scale-105"
+            className="button-accent mt-8 h-14 md:h-16 px-8 md:px-12 text-base md:text-lg shadow-xl hover:shadow-2xl hover:scale-105"
           >
             Đăng ký nhận Bảng Chẩn Bệnh miễn phí ngay
           </button>
@@ -624,12 +623,12 @@ export default function Home() {
         </div>
       </footer>
 
-      <div className="fixed bottom-6 right-6 z-50 flex flex-col items-center gap-3 group">
+      <div className="fixed bottom-4 right-4 md:bottom-8 md:right-8 z-50 flex flex-col items-center gap-2 md:gap-3 group">
         <div className="relative">
           {/* Decorative glow behind the label */}
           <div className="absolute -inset-1 bg-gradient-to-r from-xle-primary to-xle-accent rounded-full blur opacity-20 group-hover:opacity-40 transition-opacity duration-500" />
           
-          <span className="relative flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/95 backdrop-blur-md text-[10px] font-bold uppercase tracking-tight text-xle-primary shadow-xl border border-xle-primary/10">
+          <span className="relative flex items-center gap-2 px-3 md:px-4 py-1 md:py-1.5 rounded-full bg-white/95 backdrop-blur-md text-[9px] md:text-[10px] font-bold uppercase tracking-tight text-xle-primary shadow-xl border border-xle-primary/10">
             {/* Pulsing indicator */}
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
@@ -643,7 +642,7 @@ export default function Home() {
           target="_blank"
           rel="noreferrer"
           aria-label="Liên hệ Zalo"
-          className="flex h-18 w-18 items-center justify-center rounded-full bg-[#0068ff] text-[18px] font-bold text-white shadow-lg transition hover:scale-105"
+          className="flex h-14 w-14 md:h-18 md:w-18 items-center justify-center rounded-full bg-[#0068ff] text-[14px] md:text-[18px] font-bold text-white shadow-lg transition hover:scale-105"
         >
           Zalo
         </a>
@@ -652,9 +651,9 @@ export default function Home() {
           target="_blank"
           rel="noreferrer"
           aria-label="Liên hệ Facebook"
-          className="flex h-18 w-18 items-center justify-center rounded-full bg-[#1877f2] text-white shadow-lg transition hover:scale-105"
+          className="flex h-14 w-14 md:h-18 md:w-18 items-center justify-center rounded-full bg-[#1877f2] text-white shadow-lg transition hover:scale-105"
         >
-          <svg viewBox="0 0 24 24" className="h-6 w-6 fill-current" aria-hidden="true">
+          <svg viewBox="0 0 24 24" className="h-5 w-5 md:h-6 md:w-6 fill-current" aria-hidden="true">
             <path d="M13.5 22v-8h2.7l.4-3h-3.1V9.1c0-.9.3-1.6 1.7-1.6h1.5V4.8c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4V11H8v3h2.5v8h3z" />
           </svg>
         </a>
