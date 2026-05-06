@@ -458,12 +458,12 @@ export default function Home() {
               <h2 className="text-6xl md:text-8xl font-black text-xle-primary leading-none tracking-tighter">
                 100%
               </h2>
-              <h3 className="text-2xl md:text-4xl font-extrabold text-foreground uppercase tracking-tight">
+              <h3 className="text-xl md:text-4xl font-extrabold text-foreground uppercase tracking-tight">
                 Cam kết không sử dụng AI
               </h3>
               <div className="h-1 w-20 bg-xle-accent mx-auto rounded-full"></div>
-              <p className="text-lg md:text-xl font-medium text-xle-text-secondary max-w-3xl mx-auto leading-relaxed italic">
-                "Mỗi bài làm đều được chuyên gia trực tiếp đọc, nghe và phân tích chi tiết từng lỗi nhỏ nhất của bạn."
+              <p className="text-md md:text-xl font-medium text-xle-text-secondary max-w-3xl mx-auto leading-relaxed italic">
+                "Mỗi bài làm đều được chuyên gia <br/> trực tiếp đọc, nghe và phân tích chi tiết từng lỗi nhỏ nhất của bạn."
               </p>
             </div>
 
