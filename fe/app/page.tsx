@@ -398,8 +398,8 @@ export default function Home() {
       <section className="bg-white py-16 md:py-24">
         <div className="mx-auto max-w-7xl px-6">
           <div className="mb-12 md:mb-16 text-center">
-            <h2 className="text-2xl md:text-4xl font-extrabold text-foreground leading-tight">TẠI SAO NÊN CHỌN TEST TRÌNH ĐỘ TẠI XA LỘ ENGLISH?</h2>
-            <p className="mt-4 text-xle-text-secondary max-w-2xl mx-auto text-base md:text-lg">Hệ thống đánh giá chuyên sâu giúp bạn tiết kiệm thời gian và tối ưu hóa lộ trình đạt band điểm mong muốn.</p>
+            <h2 className="text-xl md:text-3xl font-extrabold text-foreground leading-tight">TẠI SAO NÊN CHỌN TEST TRÌNH ĐỘ TẠI XA LỘ ENGLISH?</h2>
+            <p className="mt-4 text-xle-text-secondary max-w-4xl mx-auto text-base md:text-lg">Hệ thống đánh giá chuyên sâu giúp bạn tiết kiệm thời gian và tối ưu hóa lộ trình đạt band điểm mong muốn.</p>
           </div>
           
           <div className="grid grid-cols-1 gap-6 md:gap-8 md:grid-cols-2">
@@ -513,7 +513,7 @@ export default function Home() {
             <span className="text-xle-primary font-black tracking-tight uppercase text-lg md:text-xl">KẾT QUẢ MẪU</span>
             <h2 className="mt-2 text-3xl font-extrabold md:text-4xl text-foreground">Bảng Chẩn Bệnh thực tế</h2>
             <p className="mt-4 text-xle-text-secondary max-w-2xl mx-auto">
-              Khám phá Bảng Chẩn Bệnh: Không chỉ trả điểm, Xa Lộ English chỉ rõ lỗ hổng của bạn.
+              Khám phá Bảng Chẩn Bệnh: Không chỉ trả điểm,<br/> Xa Lộ English chỉ rõ lỗ hổng của bạn.
             </p>
           </div>
 
@@ -604,7 +604,7 @@ export default function Home() {
         </div> */}
         <div className="mx-auto relative z-10 flex max-w-4xl flex-col items-center text-center px-6">
           <h2 className="text-2xl md:text-5xl font-extrabold leading-tight">
-            Bắt đầu kiểm tra trình độ <br /> IELTS của bạn ngay hôm nay
+            Bắt đầu kiểm tra trình độ IELTS <br /> của bạn ngay hôm nay
           </h2>
           <p className="mt-4 text-base md:text-lg text-white/80 font-medium max-w-xl">
             Đừng để band điểm mơ hồ cản trở giấc mơ của bạn. <br/> Nhận đánh giá chính xác từ chuyên gia ngay.
