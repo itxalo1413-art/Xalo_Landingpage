@@ -628,7 +628,7 @@ export default function Home() {
           {/* Decorative glow behind the label */}
           <div className="absolute -inset-1 bg-gradient-to-r from-xle-primary to-xle-accent rounded-full blur opacity-20 group-hover:opacity-40 transition-opacity duration-500" />
           
-          <span className="relative flex items-center gap-2 px-3 md:px-4 py-1 md:py-1.5 rounded-full bg-white/95 backdrop-blur-md text-[9px] md:text-[10px] font-bold uppercase tracking-tight text-xle-primary shadow-xl border border-xle-primary/10">
+          <span className="relative hidden md:flex items-center gap-2 px-3 md:px-4 py-1 md:py-1.5 rounded-full bg-white/95 backdrop-blur-md text-[9px] md:text-[10px] font-bold uppercase tracking-tight text-xle-primary shadow-xl border border-xle-primary/10">
             {/* Pulsing indicator */}
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
@@ -653,7 +653,7 @@ export default function Home() {
           aria-label="Liên hệ Facebook"
           className="flex h-14 w-14 md:h-18 md:w-18 items-center justify-center rounded-full bg-[#1877f2] text-white shadow-lg transition hover:scale-105"
         >
-          <svg viewBox="0 0 24 24" className="h-5 w-5 md:h-6 md:w-6 fill-current" aria-hidden="true">
+          <svg viewBox="0 0 24 24" className="h-8 w-8 md:h-10 md:w-10 fill-current" aria-hidden="true">
             <path d="M13.5 22v-8h2.7l.4-3h-3.1V9.1c0-.9.3-1.6 1.7-1.6h1.5V4.8c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4V11H8v3h2.5v8h3z" />
           </svg>
         </a>
