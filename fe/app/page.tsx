@@ -226,7 +226,7 @@ export default function Home() {
                     <h2 className="text-2xl md:text-3xl font-black text-foreground leading-tight tracking-tight">
                       Nhận Bảng Chẩn Bệnh <br/>miễn phí
                     </h2>
-                    <p className="text-sm text-xle-text-secondary font-medium">Cung cấp thông tin để Xa Lộ English liên hệ sắp xếp lịch kiểm tra cho bạn nhé.</p>
+                    <p className="text-sm text-xle-text-secondary font-medium">Cung cấp thông tin chính xác để Xa Lộ English có thể liên hệ sắp xếp lịch kiểm tra cho bạn sớm nhé.</p>
                   </div>
 
                   <div className="space-y-4">
