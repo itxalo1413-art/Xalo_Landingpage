@@ -184,7 +184,7 @@ export default function Home() {
 
             <div className="flex items-center gap-4 py-2">
               <p className="text-base md:text-xl font-normal text-xle-text-secondary leading-relaxed">
-                <span className="font-medium text-foreground  decoration-xle-accent/40 decoration-4 underline-offset-4">Hơn 2,000 học viên</span> đã kiểm tra trình độ miễn phí và nhận lộ trình học phù hợp
+                <span className="font-bold text-foreground  decoration-xle-accent/40 decoration-4 underline-offset-4">Hơn 2,000 học viên</span> đã kiểm tra trình độ miễn phí và nhận lộ trình học phù hợp
               </p>
             </div>
 
@@ -230,8 +230,8 @@ export default function Home() {
                   </div>
 
                   <div className="space-y-4">
-                    <div className="space-y-1.5">
-                      <label className="text-xs font-bold uppercase tracking-tight text-xle-text-secondary" htmlFor="fullName">
+                    <div className="space-y-1.5 flex flex-col gap-1">
+                      <label className="text-xs font-bold tracking-tight text-xle-text-secondary" htmlFor="fullName">
                         Họ và tên
                       </label>
                       <input
@@ -249,8 +249,8 @@ export default function Home() {
                       )}
                     </div>
 
-                    <div className="space-y-1.5">
-                      <label className="text-xs font-bold uppercase tracking-tight text-xle-text-secondary" htmlFor="phone">
+                    <div className="space-y-1.5 flex flex-col gap-1">
+                      <label className="text-xs font-bold tracking-tight text-xle-text-secondary" htmlFor="phone">
                         Số điện thoại
                       </label>
                       <input
@@ -272,8 +272,8 @@ export default function Home() {
                       )}
                     </div>
 
-                    <div className="space-y-1.5">
-                      <label className="text-xs font-bold uppercase tracking-tight text-xle-text-secondary" htmlFor="email">
+                    <div className="space-y-1.5 flex flex-col gap-1">
+                      <label className="text-xs font-bold tracking-tight text-xle-text-secondary" htmlFor="email">
                         Email
                       </label>
                       <input
@@ -290,9 +290,9 @@ export default function Home() {
                       )}
                     </div>
 
-                    <div className="space-y-1.5">
+                    <div className="space-y-1.5 flex flex-col gap-1">
                       <label
-                        className="text-xs font-bold uppercase tracking-tight text-xle-text-secondary"
+                        className="text-xs font-bold tracking-tight text-xle-text-secondary"
                         htmlFor="motivation"
                       >
                         Mục đích học tiếng Anh/ IELTS của bạn
@@ -433,7 +433,7 @@ export default function Home() {
                 <div className={`mb-6 flex h-16 w-16 items-center justify-center rounded-2xl ${item.color} group-hover:scale-110 transition-transform duration-500 shadow-sm`}>
                   {item.icon}
                 </div>
-                <p className="text-xl text-xle-text-secondary font-extrabold mb-3 text-foreground tracking-tight items-center justify-center">{item.title}</p>
+                <p className="text-xl text-xle-text-secondary font-bold mb-3 text-foreground tracking-tight items-center justify-center">{item.title}</p>
                 <p className="text-xle-text-secondary leading-relaxed text-[15px]">{item.content}</p>
                 
 
@@ -629,7 +629,7 @@ export default function Home() {
           {/* Decorative glow behind the label */}
           <div className="absolute -inset-1 bg-gradient-to-r from-xle-primary to-xle-accent rounded-full blur opacity-20 group-hover:opacity-40 transition-opacity duration-500" />
           
-          <span className="relative flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/95 backdrop-blur-md text-[10px] font-black uppercase tracking-tight text-xle-primary shadow-xl border border-xle-primary/10">
+          <span className="relative flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/95 backdrop-blur-md text-[10px] font-bold uppercase tracking-tight text-xle-primary shadow-xl border border-xle-primary/10">
             {/* Pulsing indicator */}
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
