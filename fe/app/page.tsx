@@ -226,7 +226,7 @@ export default function Home() {
                     <h2 className="text-2xl md:text-3xl font-black text-foreground leading-tight tracking-tight">
                       Nhận Bảng Chẩn Bệnh <br/>miễn phí
                     </h2>
-                    <p className="text-sm text-xle-text-secondary font-medium">Cung cấp thông tin để Xa Lộ liên hệ sắp xếp lịch kiểm tra cho bạn nhé.</p>
+                    <p className="text-sm text-xle-text-secondary font-medium">Cung cấp thông tin để Xa Lộ English liên hệ sắp xếp lịch kiểm tra cho bạn nhé.</p>
                   </div>
 
                   <div className="space-y-4">
@@ -384,7 +384,7 @@ export default function Home() {
                   <div className="space-y-3">
                     <h2 className="text-3xl font-extrabold text-foreground tracking-tight">Cảm ơn bạn!</h2>
                     <p className="text-xle-text-secondary max-w-xs mx-auto leading-relaxed">
-                      Xa Lộ đã nhận được thông tin. <br/> Đội ngũ tư vấn sẽ liên hệ với bạn trong vòng 24h để sắp xếp lịch kiểm tra phù hợp nhất nhé.
+                      Xa Lộ English đã nhận được thông tin. <br/> Đội ngũ tư vấn sẽ liên hệ với bạn trong vòng 24h để sắp xếp lịch kiểm tra phù hợp nhất nhé.
                     </p>
                   </div>
                 </div>
@@ -398,7 +398,7 @@ export default function Home() {
       <section className="bg-white py-24">
         <div className="mx-auto max-w-7xl px-6">
           <div className="mb-16 text-center">
-            <h2 className="text-3xl font-extrabold md:text-4xl text-foreground">Tại sao chọn Xa Lộ</h2>
+            <h2 className="text-3xl font-extrabold md:text-4xl text-foreground">Tại sao chọn Xa Lộ English</h2>
             <p className="mt-4 text-xle-text-secondary max-w-2xl mx-auto text-lg">Hệ thống đánh giá chuyên sâu giúp bạn tiết kiệm thời gian và tối ưu hóa lộ trình đạt band điểm mong muốn.</p>
           </div>
           
