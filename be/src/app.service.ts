@@ -51,6 +51,11 @@ export class AppService {
     return { ok: true, service: 'xalo-landing-be' };
   }
 
+  async getLeadCount() {
+    const count = await this.leadModel.countDocuments();
+    return { count };
+  }
+
   async createLead(payload: CreateLeadDto) {
     const fullName = payload.fullName?.trim();
     const phone = payload.phone?.trim();

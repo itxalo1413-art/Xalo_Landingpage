@@ -170,6 +170,30 @@ export default function Home() {
   });
 
   useEffect(() => {
+    // Fetch actual registration count from backend
+    const fetchCount = async () => {
+      try {
+        const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:4000";
+        const response = await fetch(`${baseUrl}/leads/count`);
+        if (response.ok) {
+          const data = await response.json();
+          const registeredCount = typeof data.count === 'number' ? data.count : 0;
+          setSlotsRemaining(Math.max(0, 100 - registeredCount));
+        }
+      } catch (error) {
+        console.error("Failed to fetch registration count:", error);
+      }
+    };
+    fetchCount();
+  }, []);
+
+  useEffect(() => {
+    if (isSubmitted && formSectionRef.current) {
+      formSectionRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, [isSubmitted]);
+
+  useEffect(() => {
     // Set a relative target date for demo purposes (e.g., 2 days from now)
     const targetDate = new Date();
     targetDate.setDate(targetDate.getDate() + 2);
@@ -545,17 +569,53 @@ export default function Home() {
                   </form>
               ) : (
                 <div className="flex flex-col items-center justify-center space-y-6 py-12 text-center animate-in fade-in zoom-in duration-500">
-                  <div className="flex h-20 w-20 items-center justify-center rounded-full bg-green-100 text-green-600">
-                    <svg className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                  <div className="space-y-3">
-                    <h2 className="text-3xl font-extrabold text-foreground tracking-tight">Cảm ơn bạn!</h2>
-                    <p className="text-xle-text-secondary max-w-xs mx-auto leading-relaxed">
-                      Xa Lộ English đã nhận được thông tin. <br/> Đội ngũ tư vấn sẽ liên hệ với bạn trong vòng 24h để sắp xếp lịch kiểm tra phù hợp nhất nhé.
-                    </p>
-                  </div>
+                    <div className="max-w-2xl mx-auto px-4 w-full">
+                      {/* Header Group */}
+                      <div className="flex flex-col items-center gap-4 mb-10">
+                        <div className="flex h-20 w-20 items-center justify-center rounded-full bg-green-100 text-green-600 shadow-sm">
+                          <svg className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                          </svg>
+                        </div>
+                        <div className="space-y-1">
+                          <p className="text-xl font-bold text-xle-secondary tracking-tight">Đăng ký thành công rồi nè!</p>
+                          <p className="text-xle-text-secondary text-sm leading-relaxed font-medium">
+                            Cảm ơn bạn đã tin tưởng lựa chọn Xa Lộ English.
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Main Info Group */}
+                      <div className="space-y-10">
+                        {/* Next Steps Section */}
+                        <div className="space-y-4">
+                          <div className="flex justify-center items-center gap-3 text-foreground/80">
+                            <div className="h-px w-8 bg-black/[0.05]" />
+                            <span className="text-sm font-bold uppercase tracking-tight">Bước tiếp theo</span>
+                            <div className="h-px w-8 bg-black/[0.05]" />
+                          </div>
+                          <p className="text-sm leading-relaxed font-normal text-xle-text-secondary">
+                            Đội ngũ Xa Lộ English sẽ <span className="text-foreground font-bold">"ting ting"</span> qua Zalo hoặc gọi điện cho bạn trong vòng <span className="text-xle-primary font-bold">24 giờ tới</span> <br/> để xác nhận lịch Test cụ thể. Bạn nhớ chú ý điện thoại nha!
+                          </p>
+                        </div>
+
+                        {/* Scholarship Section */}
+                        <div className="relative group">
+                          <div className="absolute -inset-1 bg-gradient-to-r from-xle-primary/20 to-xle-accent/20 rounded-[2rem] blur opacity-25 transition duration-1000"></div>
+                          <div className="relative bg-[#9494ff] border border-xle-primary/10 rounded-[1.5rem] p-8 space-y-4 shadow-xl shadow-xle-primary/5">
+                            <div className="flex items-center justify-center gap-2">
+                              <p className="text-white text-lg font-bold uppercase tracking-tight">Cơ hội học bổng 100%</p>
+                            </div>
+                            <p className="text-md text-white leading-relaxed font-normal">
+                              Xa Lộ English đang có chương trình Học bổng lên tới <span className="text-white font-bold">100%</span> <br/> dành cho các bạn có tinh thần quyết tâm bứt phá IELTS sớm.<br/> Đừng ngại nhắn tin cho Xa Lộ English để được tư vấn chi tiết cách săn học bổng ngay nhé!
+                            </p>
+                          </div>
+                        </div>
+
+                        {/* Footer sign-off */}
+                        <p className="text-sm font-bold text-foreground pt-4">Hẹn sớm gặp lại bạn tại buổi kiểm tra!</p>
+                      </div>
+                    </div>
                 </div>
                 )}
               </section>

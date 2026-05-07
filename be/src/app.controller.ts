@@ -10,6 +10,11 @@ export class AppController {
     return this.appService.getHealth();
   }
 
+  @Get('leads/count')
+  getLeadCount() {
+    return this.appService.getLeadCount();
+  }
+
   @Post('leads')
   createLead(
     @Body()
