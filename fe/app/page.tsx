@@ -311,7 +311,7 @@ export default function Home() {
                   <form className="p-8 md:p-12 space-y-10" onSubmit={handleSubmit}>
                     <div className="text-center space-y-3">
                       <div className="inline-block px-4 py-1.5 text-xle-primary text-[10px] font-bold uppercase tracking-tight mb-1">
-                        Form đăng ký kiểm tra
+                        Đăng k
                       </div>
                       <h2 className="text-3xl md:text-5xl font-black text-foreground leading-tight tracking-tight">
                         Nhận Bảng Chẩn Bệnh
@@ -480,7 +480,7 @@ export default function Home() {
                             </div>
                           </div>
                           <div className="space-y-4 flex flex-col gap-2">
-                            <p className="text-[14px] font-bold text-xle-text-secondary/80 ml-1">Ngày làm bài (L/R/W) *</p>
+                            <p className="text-[14px] font-bold text-xle-text-secondary/80 ml-1">Ngày làm bài (Listening/Reading/Writing) *</p>
                             <div className="grid grid-cols-3 gap-3">
                               {["Thứ 3", "Thứ 5", "Thứ 7"].map(day => (
                                 <button
