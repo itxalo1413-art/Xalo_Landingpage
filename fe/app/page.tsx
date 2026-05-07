@@ -495,12 +495,19 @@ export default function Home() {
             <section className="bg-white py-24">
         <div className="mx-auto max-w-7xl px-6">
           <div className="relative w-full overflow-hidden rounded-2xl border border-black/[0.05] shadow-sm">
-            <Image 
-              src="/Web_1.png" 
-              alt="Xa Lộ English Feature" 
-              width={1920} 
-              height={1080} 
-              className="w-full h-auto object-contain"
+            <Image
+              src="/Web_mobile.png"
+              alt="Xa Lộ English Feature Mobile"
+              width={1080}
+              height={1920}
+              className="h-auto w-full object-contain md:hidden"
+            />
+            <Image
+              src="/Web_1.png"
+              alt="Xa Lộ English Feature"
+              width={1920}
+              height={1080}
+              className="hidden h-auto w-full object-contain md:block"
             />
           </div>
         </div>
