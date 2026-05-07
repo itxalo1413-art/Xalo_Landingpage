@@ -362,37 +362,7 @@ export default function Home() {
                           />
                           {touched.email && errors.email && <p className="text-[10px] font-bold text-red-500 mt-1 uppercase ml-1">{errors.email}</p>}
                         </div>
-                      </div>
-
-                      {/* Section 2 */}
-                      <div className="space-y-6">
-                        <div className="flex items-center gap-4">
-                          <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-xle-primary text-white text-lg font-black shadow-lg">2</span>
-                          <p className="text-md font-bold">Mục tiêu & Dự kiến</p>
-                          <div className="h-px flex-1 bg-black/[0.05]" />
-                        </div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                          {/* Left: Level */}
-                          <div className="space-y-3 flex flex-col">
-                            <label className="text-[14px] font-bold text-foreground/90 ml-1">Trình độ hiện tại của bạn đang ở mức nào? *</label>
-                            <div className="flex flex-col gap-3">
-                              {["0 - 4.5", "4.5 - 5.5", "5.5 - 6.5", "7.0+", "Mình chưa kiểm tra bao giờ"].map((level) => (
-                                <button
-                                  key={level} type="button"
-                                  onClick={() => setForm(p => ({...p, currentLevel: level}))}
-                                  className={`h-12 w-full flex items-center px-6 rounded-xl border font-medium transition-all ${form.currentLevel === level ? 'bg-xle-primary/10 border-xle-primary text-xle-primary shadow-sm' : 'bg-slate-50 border-black/[0.03] text-xle-text-secondary hover:border-black/10'}`}
-                                >
-                                  <div className={`w-4 h-4 rounded-full border-2 mr-4 flex items-center justify-center transition-all ${form.currentLevel === level ? 'border-xle-primary' : 'border-black/20'}`}>
-                                    {form.currentLevel === level && <div className="w-2 h-2 rounded-full bg-xle-primary" />}
-                                  </div>
-                                  <span className="text-[13px]">{level}</span>
-                                </button>
-                              ))}
-                            </div>
-                            {touched.currentLevel && errors.currentLevel && <p className="text-[12px] font-bold text-red-500 mt-1 uppercase ml-1">{errors.currentLevel}</p>}
-                          </div>
-
-                          {/* Right: Referral */}
+                        {/* Referral Source - Separated Full Width */}
                           <div className="space-y-3 flex flex-col">
                             <label className="text-[14px] font-bold text-foreground/90 ml-1">Bạn biết đến thông tin đăng ký qua đâu? *</label>
                             <div className="flex flex-col gap-3">
@@ -429,28 +399,60 @@ export default function Home() {
                             </div>
                             {touched.referralSource && errors.referralSource && <p className="text-[12px] font-bold text-red-500 mt-1 uppercase ml-1">{errors.referralSource}</p>}
                           </div>
-                        </div>
+                      </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                          <div className="space-y-2 flex flex-col gap-2">
-                            <label className="text-[14px] font-bold text-xle-text-secondary/80 ml-1">Mục tiêu *</label>
-                            <input
-                              type="text" value={form.targetAim}
-                              onBlur={() => setTouched(p => ({...p, targetAim: true}))}
-                              onChange={(e) => setForm(p => ({...p, targetAim: e.target.value}))}
-                              className="h-14 w-full rounded-2xl bg-slate-50 border border-black/[0.05] px-6 font-bold focus:bg-white focus:ring-4 focus:ring-xle-primary/10 outline-none transition-all"
-                              placeholder="Ví dụ: 7.0+"
-                            />
-                            {touched.targetAim && errors.targetAim && <p className="text-[10px] font-bold text-red-500 mt-1 uppercase ml-1">{errors.targetAim}</p>}
+                      {/* Section 2 */}
+                      <div className="space-y-6">
+                        <div className="flex items-center gap-4">
+                          <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-xle-primary text-white text-lg font-black shadow-lg">2</span>
+                          <p className="text-md font-bold">Mục tiêu & Dự kiến</p>
+                          <div className="h-px flex-1 bg-black/[0.05]" />
+                        </div>
+                        <div className="space-y-8">
+                          
+
+                          {/* Level - Separated Full Width */}
+                          <div className="space-y-3 flex flex-col">
+                            <label className="text-[14px] font-bold text-foreground/90 ml-1">Trình độ hiện tại của bạn đang ở mức nào? *</label>
+                            <div className="flex flex-col gap-3">
+                              {["0 - 4.5", "4.5 - 5.5", "5.5 - 6.5", "7.0+", "Mình chưa kiểm tra bao giờ"].map((level) => (
+                                <button
+                                  key={level} type="button"
+                                  onClick={() => setForm(p => ({...p, currentLevel: level}))}
+                                  className={`h-12 w-full flex items-center px-6 rounded-xl border font-medium transition-all ${form.currentLevel === level ? 'bg-xle-primary/10 border-xle-primary text-xle-primary shadow-sm' : 'bg-slate-50 border-black/[0.03] text-xle-text-secondary hover:border-black/10'}`}
+                                >
+                                  <div className={`w-4 h-4 rounded-full border-2 mr-4 flex items-center justify-center transition-all ${form.currentLevel === level ? 'border-xle-primary' : 'border-black/20'}`}>
+                                    {form.currentLevel === level && <div className="w-2 h-2 rounded-full bg-xle-primary" />}
+                                  </div>
+                                  <span className="text-[13px]">{level}</span>
+                                </button>
+                              ))}
+                            </div>
+                            {touched.currentLevel && errors.currentLevel && <p className="text-[12px] font-bold text-red-500 mt-1 uppercase ml-1">{errors.currentLevel}</p>}
                           </div>
-                          <div className="space-y-2 flex flex-col gap-2">
-                            <label className="text-[14px] font-bold text-xle-text-secondary/80 ml-1">Dự kiến thi</label>
-                            <input
-                              type="text" value={form.expectedExamTime}
-                              onChange={(e) => setForm(p => ({...p, expectedExamTime: e.target.value}))}
-                              className="h-14 w-full rounded-2xl bg-slate-50 border border-black/[0.05] px-6 font-bold focus:bg-white focus:ring-4 focus:ring-xle-primary/10 outline-none transition-all"
-                              placeholder="Tháng 12/2026"
-                            />
+
+                          {/* Aim & Exam Time Grid */}
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div className="space-y-2 flex flex-col gap-2">
+                              <label className="text-[14px] font-bold text-xle-text-secondary/80 ml-1">Mục tiêu *</label>
+                              <input
+                                type="text" value={form.targetAim}
+                                onBlur={() => setTouched(p => ({...p, targetAim: true}))}
+                                onChange={(e) => setForm(p => ({...p, targetAim: e.target.value}))}
+                                className="h-14 w-full rounded-2xl bg-slate-50 border border-black/[0.05] px-6 font-bold focus:bg-white focus:ring-4 focus:ring-xle-primary/10 outline-none transition-all"
+                                placeholder="Ví dụ: 7.0+"
+                              />
+                              {touched.targetAim && errors.targetAim && <p className="text-[10px] font-bold text-red-500 mt-1 uppercase ml-1">{errors.targetAim}</p>}
+                            </div>
+                            <div className="space-y-2 flex flex-col gap-2">
+                              <label className="text-[14px] font-bold text-xle-text-secondary/80 ml-1">Dự kiến thi</label>
+                              <input
+                                type="text" value={form.expectedExamTime}
+                                onChange={(e) => setForm(p => ({...p, expectedExamTime: e.target.value}))}
+                                className="h-14 w-full rounded-2xl bg-slate-50 border border-black/[0.05] px-6 font-bold focus:bg-white focus:ring-4 focus:ring-xle-primary/10 outline-none transition-all"
+                                placeholder="Tháng 12/2026"
+                              />
+                            </div>
                           </div>
                         </div>
                       </div>
