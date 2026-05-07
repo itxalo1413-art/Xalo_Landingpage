@@ -53,6 +53,7 @@ export class AppService {
 
   async getLeadCount() {
     const count = await this.leadModel.countDocuments();
+    console.log(`[AppService] Public lead count requested. Current count: ${count}`);
     return { count };
   }
 

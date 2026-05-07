@@ -97,7 +97,15 @@ export default function Home() {
     speakingSchedule: false,
   });
 
-  const [slotsRemaining, setSlotsRemaining] = useState(100);
+  const [slotsRemaining, setSlotsRemaining] = useState<number>(100);
+
+  // Load initial slots from localStorage to avoid flicker
+  useEffect(() => {
+    const cached = localStorage.getItem('xle_slots_remaining');
+    if (cached) {
+      setSlotsRemaining(parseInt(cached));
+    }
+  }, []);
 
   const firstInputRef = useRef<HTMLInputElement>(null);
   const formSectionRef = useRef<HTMLElement>(null);
@@ -153,8 +161,12 @@ export default function Home() {
         testTimeSlot: false,
         speakingSchedule: false,
       });
+      setSlotsRemaining((prev) => {
+        const next = Math.max(0, prev - 1);
+        localStorage.setItem('xle_slots_remaining', next.toString());
+        return next;
+      });
       setIsSubmitted(true);
-      setSlotsRemaining((prev) => Math.max(0, prev - 1));
     } catch (error) {
       setSubmitError(error instanceof Error ? error.message : "Không thể gửi đăng ký.");
     } finally {
@@ -174,11 +186,14 @@ export default function Home() {
     const fetchCount = async () => {
       try {
         const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:4000";
-        const response = await fetch(`${baseUrl}/leads/count`);
+        const response = await fetch(`${baseUrl}/leads/count?t=${Date.now()}`);
         if (response.ok) {
           const data = await response.json();
           const registeredCount = typeof data.count === 'number' ? data.count : 0;
-          setSlotsRemaining(Math.max(0, 100 - registeredCount));
+          const remaining = Math.max(0, 100 - registeredCount);
+          console.log(`[Sync] Slots remaining updated: ${remaining}`);
+          setSlotsRemaining(remaining);
+          localStorage.setItem('xle_slots_remaining', remaining.toString());
         }
       } catch (error) {
         console.error("Failed to fetch registration count:", error);
@@ -334,8 +349,8 @@ export default function Home() {
                 {!isSubmitted ? (
                   <form className="p-8 md:p-12 space-y-10" onSubmit={handleSubmit}>
                     <div className="text-center space-y-3">
-                      <div className="inline-block px-4 py-1.5 text-xle-primary text-[10px] font-bold uppercase tracking-tight mb-1">
-                        Đăng k
+                      <div className="inline-block px-4 py-1.5 text-xle-primary text-[14px] font-bold uppercase tracking-tight mb-1">
+                        Đăng ký ngay tại đây
                       </div>
                       <h2 className="text-3xl md:text-5xl font-black text-foreground leading-tight tracking-tight">
                         Nhận Bảng Chẩn Bệnh
