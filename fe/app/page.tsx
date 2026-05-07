@@ -496,16 +496,17 @@ export default function Home() {
                         </div>
                       </div>
 
-                      {/* Section 3 */}
-                      <div className="space-y-6">
-                        <div className="flex items-center gap-4">
-                          <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-xle-primary text-white text-lg font-black shadow-lg">3</span>
-                          <p className="text-md font-bold text-foreground">Lịch kiểm tra</p>
-                          <div className="h-px flex-1 bg-black/[0.05]" />
-                        </div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                        {/* Section 3: Lịch kiểm tra */}
+                        <div className="space-y-10">
+                          <div className="flex items-center gap-4">
+                            <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-xle-primary text-white text-lg font-black shadow-lg">3</span>
+                            <p className="text-md font-bold text-foreground">Lịch kiểm tra</p>
+                            <div className="h-px flex-1 bg-black/[0.05]" />
+                          </div>
+
+                          {/* Common: Test Mode Selection */}
                           <div className="space-y-4 flex flex-col gap-2">
-                            <p className="text-[14px] font-bold text-xle-text-secondary/80 ml-1">Hình thức *</p>
+                            <p className="text-[14px] font-bold text-xle-text-secondary/80 ml-1">Hình thức kiểm tra (Áp dụng cho toàn bộ buổi test) *</p>
                             <div className="grid grid-cols-2 gap-4">
                               {["Online", "Offline"].map(mode => (
                                 <button
@@ -517,56 +518,73 @@ export default function Home() {
                                 </button>
                               ))}
                             </div>
+                            {touched.testMode && errors.testMode && <p className="text-[10px] font-bold text-red-500 mt-1 uppercase ml-1">{errors.testMode}</p>}
                           </div>
-                          <div className="space-y-4 flex flex-col gap-2">
-                            <p className="text-[14px] font-bold text-xle-text-secondary/80 ml-1">Ngày làm bài (Listening/Reading/Writing) *</p>
-                            <div className="grid grid-cols-3 gap-3">
-                              {["Thứ 3", "Thứ 5", "Thứ 7"].map(day => (
-                                <button
-                                  key={day} type="button"
-                                  onClick={() => setForm(p => ({...p, testDays: day}))}
-                                  className={`h-12 rounded-xl text-[12px] font-bold border transition-all ${form.testDays === day ? 'bg-xle-primary/10 text-xle-primary border-xle-primary shadow-sm' : 'bg-slate-50 text-foreground/40 border-black/[0.05]'}`}
-                                >
-                                  {day}
-                                </button>
-                              ))}
+
+                          {/* Part 1: 3-Skill Test */}
+                          <div className="space-y-8 bg-slate-50/30 rounded-[2rem] p-6 border border-black/[0.02]">
+                            <div className="flex items-center gap-2 mb-2">
+                               <div className="w-1.5 h-1.5 rounded-full bg-xle-primary" />
+                               <p className="text-sm font-bold text-foreground uppercase tracking-tight">Phần 1: Bài Test 3 kỹ năng (Listening/Reading/Writing)</p>
+                            </div>
+                            
+                            <div className="space-y-4 flex flex-col gap-2">
+                              <p className="text-[14px] font-bold text-xle-text-secondary/80 ml-1">Ngày làm bài*</p>
+                              <div className="grid grid-cols-3 gap-3">
+                                {["Thứ 3", "Thứ 5", "Thứ 7"].map(day => (
+                                  <button
+                                    key={day} type="button"
+                                    onClick={() => setForm(p => ({...p, testDays: day}))}
+                                    className={`h-12 rounded-xl text-[12px] font-bold border transition-all ${form.testDays === day ? 'bg-xle-primary/10 text-xle-primary border-xle-primary shadow-sm' : 'bg-white text-foreground/40 border-black/[0.05]'}`}
+                                  >
+                                    {day}
+                                  </button>
+                                ))}
+                              </div>
+                              {touched.testDays && errors.testDays && <p className="text-[10px] font-bold text-red-500 mt-1 uppercase ml-1">{errors.testDays}</p>}
+                            </div>
+
+                            <div className="space-y-2 flex flex-col gap-2">
+                              <label className="text-[14px] font-bold text-xle-text-secondary/80 ml-1">Khung thời gian test mong muốn *</label>
+                              <select
+                                value={form.testTimeSlot}
+                                onBlur={() => setTouched(p => ({...p, testTimeSlot: true}))}
+                                onChange={(e) => setForm(p => ({...p, testTimeSlot: e.target.value}))}
+                                className="h-14 w-full rounded-2xl bg-white border border-black/[0.05] px-6 font-bold focus:bg-white focus:ring-4 focus:ring-xle-primary/10 outline-none transition-all appearance-none cursor-pointer"
+                              >
+                                <option value="">Chọn khung giờ</option>
+                                <option value="Ca sáng (9:00 - 12:00)">Ca sáng (9:00 - 12:00)</option>
+                                <option value="Ca chiều (14:00 - 17:00)">Ca chiều (14:00 - 17:00)</option>
+                                <option value="Ca tối (18:30 - 21:30)">Ca tối (18:30 - 21:30)</option>
+                              </select>
+                              {touched.testTimeSlot && errors.testTimeSlot && <p className="text-[10px] font-bold text-red-500 mt-1 uppercase ml-1">{errors.testTimeSlot}</p>}
                             </div>
                           </div>
-                        </div>
 
+                        {/* Part 2: Speaking Test */}
                         <div className="space-y-6">
-                          <div className="space-y-2 flex flex-col gap-2">
-                            <label className="text-[14px] font-bold text-xle-text-secondary/80 ml-1">Khung thời gian test mong muốn *</label>
-                            <select
-                              value={form.testTimeSlot}
-                              onChange={(e) => setForm(p => ({...p, testTimeSlot: e.target.value}))}
-                              className="h-14 w-full appearance-none rounded-2xl bg-slate-50 border border-black/[0.05] px-6 font-medium focus:bg-white focus:ring-4 focus:ring-xle-primary/10 outline-none transition-all bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20fill%3D%22none%22%20viewBox%3D%220%200%2024%2024%22%20stroke%3D%22%236b7280%22%20stroke-width%3D%222%22%3E%3Cpath%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20d%3D%22M19%209l-7%207-7-7%22%2F%3E%3C%2Fsvg%3E')] bg-[length:1.25rem_1.25rem] bg-[right_1.5rem_center] bg-no-repeat"
-                            >
-                              <option value="">Chọn khung giờ</option>
-                              <option value="9:00 - 12:00">9:00 - 12:00</option>
-                              <option value="14:00 - 17:00">14:00 - 17:00</option>
-                              <option value="19:00 - 22:00">19:00 - 22:00</option>
-                            </select>
+                           <div className="flex items-center gap-2 mb-2">
+                             <div className="w-1.5 h-1.5 rounded-full bg-xle-accent" />
+                             <p className="text-sm font-bold text-foreground uppercase tracking-tight">Phần 2: Bài Test Speaking 1:1 (Test Riêng)</p>
                           </div>
                           
-                          <div className="space-y-3 flex flex-col">
-                            <div className="space-y-1">
-                              <label className="text-[14px] font-bold text-foreground/90 ml-1">Thời gian bạn có thể Test Speaking 1:1 ? *</label>
-                              <div className="bg-slate-50 rounded-xl p-4 border border-black/[0.03] space-y-2">
-                                <p className="text-xs text-xle-text-secondary leading-relaxed font-medium">Bạn vui lòng điền cụ thể ngày và giờ bạn có thể tham gia test Speaking.</p>
-                                <ul className="text-[11px] text-xle-text-secondary/80 space-y-1 font-medium">
-                                  <li>• <span className="font-bold">Khung giờ ưu tiên:</span> Từ 09:00 đến trước 18:30 hàng ngày</li>
-                                  <li>• <span className="font-bold">Thời lượng:</span> Khoảng 30 - 45 phút/ca</li>
-                                </ul>
-                                <p className="text-[11px] text-xle-text-secondary italic font-medium">Ví dụ: 9:30 sáng Thứ 5 (ngày 7/5)</p>
-                              </div>
+                          <div className="space-y-4 flex flex-col gap-2">
+                            <div className="bg-slate-50/50 rounded-2xl p-6 border border-black/[0.03] space-y-4 mb-2">
+                              <p className="text-[13px] text-xle-text-secondary leading-relaxed">
+                                Bạn vui lòng điền cụ thể ngày và giờ bạn có thể tham gia test Speaking. <br />
+                                <span className="font-bold text-foreground">• Khung giờ ưu tiên:</span> Từ 09:00 đến trước 18:30 hàng ngày <br />
+                                <span className="font-bold text-foreground">• Thời lượng:</span> Khoảng 30 - 45 phút/ca <br />
+                                <span className="italic opacity-80">Ví dụ: 9:30 sáng Thứ 5 (ngày 7/5)</span>
+                              </p>
                             </div>
                             <input
                               type="text" value={form.speakingSchedule}
+                              onBlur={() => setTouched(p => ({...p, speakingSchedule: true}))}
                               onChange={(e) => setForm(p => ({...p, speakingSchedule: e.target.value}))}
                               className="h-14 w-full rounded-2xl bg-slate-50 border border-black/[0.05] px-6 font-bold focus:bg-white focus:ring-4 focus:ring-xle-primary/10 outline-none transition-all"
-                              placeholder="Nhập thời gian của bạn"
+                              placeholder="Nhập ngày & giờ bạn rảnh..."
                             />
+                            {touched.speakingSchedule && errors.speakingSchedule && <p className="text-[10px] font-bold text-red-500 mt-1 uppercase ml-1">{errors.speakingSchedule}</p>}
                           </div>
                         </div>
                       </div>
