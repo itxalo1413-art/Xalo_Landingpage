@@ -371,18 +371,67 @@ export default function Home() {
                           <p className="text-md font-bold">Mục tiêu & Dự kiến</p>
                           <div className="h-px flex-1 bg-black/[0.05]" />
                         </div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                          <div className="space-y-2 flex flex-col gap-2">
-                            <label className="text-[14px] font-bold text-xle-text-secondary/80 ml-1">Trình độ hiện tại *</label>
-                            <input
-                              type="text" value={form.currentLevel}
-                              onBlur={() => setTouched(p => ({...p, currentLevel: true}))}
-                              onChange={(e) => setForm(p => ({...p, currentLevel: e.target.value}))}
-                              className="h-14 w-full rounded-2xl bg-slate-50 border border-black/[0.05] px-6 font-bold focus:bg-white focus:ring-4 focus:ring-xle-primary/10 outline-none transition-all"
-                              placeholder="Ví dụ: 4.5"
-                            />
-                            {touched.currentLevel && errors.currentLevel && <p className="text-[10px] font-bold text-red-500 mt-1 uppercase ml-1">{errors.currentLevel}</p>}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                          {/* Left: Level */}
+                          <div className="space-y-3 flex flex-col">
+                            <label className="text-[14px] font-bold text-foreground/90 ml-1">Trình độ hiện tại của bạn đang ở mức nào? *</label>
+                            <div className="flex flex-col gap-3">
+                              {["0 - 4.5", "4.5 - 5.5", "5.5 - 6.5", "7.0+", "Mình chưa kiểm tra bao giờ"].map((level) => (
+                                <button
+                                  key={level} type="button"
+                                  onClick={() => setForm(p => ({...p, currentLevel: level}))}
+                                  className={`h-12 w-full flex items-center px-6 rounded-xl border font-medium transition-all ${form.currentLevel === level ? 'bg-xle-primary/10 border-xle-primary text-xle-primary shadow-sm' : 'bg-slate-50 border-black/[0.03] text-xle-text-secondary hover:border-black/10'}`}
+                                >
+                                  <div className={`w-4 h-4 rounded-full border-2 mr-4 flex items-center justify-center transition-all ${form.currentLevel === level ? 'border-xle-primary' : 'border-black/20'}`}>
+                                    {form.currentLevel === level && <div className="w-2 h-2 rounded-full bg-xle-primary" />}
+                                  </div>
+                                  <span className="text-[13px]">{level}</span>
+                                </button>
+                              ))}
+                            </div>
+                            {touched.currentLevel && errors.currentLevel && <p className="text-[12px] font-bold text-red-500 mt-1 uppercase ml-1">{errors.currentLevel}</p>}
                           </div>
+
+                          {/* Right: Referral */}
+                          <div className="space-y-3 flex flex-col">
+                            <label className="text-[14px] font-bold text-foreground/90 ml-1">Bạn biết đến thông tin đăng ký qua đâu? *</label>
+                            <div className="flex flex-col gap-3">
+                              {[
+                                "Từ Fanpage Xa Lộ English",
+                                "Từ Threads Xa Lộ English",
+                                "Từ TikTok Xa Lộ English",
+                                "Từ Instagram Xa Lộ English",
+                                "Bạn bè giới thiệu",
+                                "Mục khác"
+                              ].map((source) => (
+                                <div key={source} className="space-y-3">
+                                  <button
+                                    type="button"
+                                    onClick={() => setForm(p => ({...p, referralSource: source}))}
+                                    className={`h-12 w-full flex items-center px-6 rounded-xl border font-medium transition-all ${form.referralSource === source ? 'bg-xle-primary/10 border-xle-primary text-xle-primary shadow-sm' : 'bg-slate-50 border-black/[0.03] text-xle-text-secondary hover:border-black/10'}`}
+                                  >
+                                    <div className={`w-4 h-4 rounded-full border-2 mr-4 flex items-center justify-center transition-all ${form.referralSource === source ? 'border-xle-primary' : 'border-black/20'}`}>
+                                      {form.referralSource === source && <div className="w-2 h-2 rounded-full bg-xle-primary" />}
+                                    </div>
+                                    <span className="text-[13px]">{source === "Mục khác" ? "Other:" : source}</span>
+                                  </button>
+                                  {source === "Mục khác" && form.referralSource === "Mục khác" && (
+                                    <input
+                                      type="text"
+                                      value={form.referralOther}
+                                      onChange={(e) => setForm(p => ({...p, referralOther: e.target.value}))}
+                                      placeholder="Vui lòng nhập kênh khác"
+                                      className="h-12 w-full rounded-xl bg-white border border-xle-primary/30 px-6 text-[13px] font-medium outline-none focus:ring-2 focus:ring-xle-primary/10 animate-in fade-in slide-in-from-top-2 duration-300"
+                                    />
+                                  )}
+                                </div>
+                              ))}
+                            </div>
+                            {touched.referralSource && errors.referralSource && <p className="text-[12px] font-bold text-red-500 mt-1 uppercase ml-1">{errors.referralSource}</p>}
+                          </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                           <div className="space-y-2 flex flex-col gap-2">
                             <label className="text-[14px] font-bold text-xle-text-secondary/80 ml-1">Mục tiêu *</label>
                             <input
@@ -393,23 +442,6 @@ export default function Home() {
                               placeholder="Ví dụ: 7.0+"
                             />
                             {touched.targetAim && errors.targetAim && <p className="text-[10px] font-bold text-red-500 mt-1 uppercase ml-1">{errors.targetAim}</p>}
-                          </div>
-                        </div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                          <div className="space-y-2 flex flex-col gap-2">
-                            <label className="text-[14px] font-bold text-xle-text-secondary/80 ml-1">Kênh biết đến *</label>
-                            <select
-                              value={form.referralSource}
-                              onChange={(e) => setForm(p => ({...p, referralSource: e.target.value}))}
-                              className="h-14 w-full appearance-none rounded-2xl bg-slate-50 border border-black/[0.05] px-6 font-bold focus:bg-white focus:ring-4 focus:ring-xle-primary/10 outline-none transition-all bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20fill%3D%22none%22%20viewBox%3D%220%200%2024%2024%22%20stroke%3D%22%236b7280%22%20stroke-width%3D%222%22%3E%3Cpath%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20d%3D%22M19%209l-7%207-7-7%22%2F%3E%3C%2Fsvg%3E')] bg-[length:1.25rem_1.25rem] bg-[right_1.5rem_center] bg-no-repeat"
-                            >
-                              <option value="">Chọn kênh</option>
-                              <option value="Fanpage">Fanpage</option>
-                              <option value="TikTok">TikTok</option>
-                              <option value="Bạn bè">Bạn bè</option>
-                              <option value="Mục khác">Mục khác:</option>
-                            </select>
-                            {touched.referralSource && errors.referralSource && <p className="text-[10px] font-bold text-red-500 mt-1 uppercase ml-1">{errors.referralSource}</p>}
                           </div>
                           <div className="space-y-2 flex flex-col gap-2">
                             <label className="text-[14px] font-bold text-xle-text-secondary/80 ml-1">Dự kiến thi</label>
@@ -430,37 +462,40 @@ export default function Home() {
                           <p className="text-md font-bold text-foreground">Lịch kiểm tra</p>
                           <div className="h-px flex-1 bg-black/[0.05]" />
                         </div>
-                        <div className="space-y-4 flex flex-col gap-2">
-                          <p className="text-[14px] font-bold text-xle-text-secondary/80 ml-1">Hình thức *</p>
-                          <div className="grid grid-cols-2 gap-4">
-                            {["Online", "Offline"].map(mode => (
-                              <button
-                                key={mode} type="button"
-                                onClick={() => setForm(p => ({...p, testMode: mode as any}))}
-                                className={`h-14 rounded-2xl text-xs font-bold border transition-all ${form.testMode === mode ? 'bg-xle-primary text-white border-xle-primary shadow-xl shadow-xle-primary/20' : 'bg-slate-50 text-foreground/40 border-black/[0.05]'}`}
-                              >
-                                {mode}
-                              </button>
-                            ))}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                          <div className="space-y-4 flex flex-col gap-2">
+                            <p className="text-[14px] font-bold text-xle-text-secondary/80 ml-1">Hình thức *</p>
+                            <div className="grid grid-cols-2 gap-4">
+                              {["Online", "Offline"].map(mode => (
+                                <button
+                                  key={mode} type="button"
+                                  onClick={() => setForm(p => ({...p, testMode: mode as any}))}
+                                  className={`h-14 rounded-2xl text-[12px] font-bold border transition-all ${form.testMode === mode ? 'bg-xle-primary text-white border-xle-primary shadow-xl shadow-xle-primary/20' : 'bg-slate-50 text-foreground/40 border-black/[0.05]'}`}
+                                >
+                                  {mode}
+                                </button>
+                              ))}
+                            </div>
+                          </div>
+                          <div className="space-y-4 flex flex-col gap-2">
+                            <p className="text-[14px] font-bold text-xle-text-secondary/80 ml-1">Ngày làm bài (L/R/W) *</p>
+                            <div className="grid grid-cols-3 gap-3">
+                              {["Thứ 3", "Thứ 5", "Thứ 7"].map(day => (
+                                <button
+                                  key={day} type="button"
+                                  onClick={() => setForm(p => ({...p, testDays: day}))}
+                                  className={`h-12 rounded-xl text-[12px] font-bold border transition-all ${form.testDays === day ? 'bg-xle-primary/10 text-xle-primary border-xle-primary shadow-sm' : 'bg-slate-50 text-foreground/40 border-black/[0.05]'}`}
+                                >
+                                  {day}
+                                </button>
+                              ))}
+                            </div>
                           </div>
                         </div>
-                        <div className="space-y-4 flex flex-col gap-2">
-                          <p className="text-[14px] font-bold text-xle-text-secondary/80 ml-1">Ngày làm bài (L/R/W) *</p>
-                          <div className="grid grid-cols-3 gap-3">
-                            {["Thứ 3", "Thứ 5", "Thứ 7"].map(day => (
-                              <button
-                                key={day} type="button"
-                                onClick={() => setForm(p => ({...p, testDays: day}))}
-                                className={`h-12 rounded-xl text-[10px] font-bold border transition-all ${form.testDays === day ? 'bg-xle-primary/10 text-xle-primary border-xle-primary shadow-sm' : 'bg-slate-50 text-foreground/40 border-black/[0.05]'}`}
-                              >
-                                {day}
-                              </button>
-                            ))}
-                          </div>
-                        </div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                        <div className="space-y-6">
                           <div className="space-y-2 flex flex-col gap-2">
-                            <label className="text-[14px] font-bold text-xle-text-secondary/80 ml-1">Ca thi mong muốn *</label>
+                            <label className="text-[14px] font-bold text-xle-text-secondary/80 ml-1">Khung thời gian test mong muốn *</label>
                             <select
                               value={form.testTimeSlot}
                               onChange={(e) => setForm(p => ({...p, testTimeSlot: e.target.value}))}
@@ -472,13 +507,24 @@ export default function Home() {
                               <option value="19:00 - 22:00">19:00 - 22:00</option>
                             </select>
                           </div>
-                          <div className="space-y-2 flex flex-col gap-2">
-                            <label className="text-[14px] font-bold text-xle-text-secondary/80 ml-1">Lịch Speaking *</label>
+                          
+                          <div className="space-y-3 flex flex-col">
+                            <div className="space-y-1">
+                              <label className="text-[14px] font-bold text-foreground/90 ml-1">Thời gian bạn có thể Test Speaking 1:1 ? *</label>
+                              <div className="bg-slate-50 rounded-xl p-4 border border-black/[0.03] space-y-2">
+                                <p className="text-xs text-xle-text-secondary leading-relaxed font-medium">Bạn vui lòng điền cụ thể ngày và giờ bạn có thể tham gia test Speaking.</p>
+                                <ul className="text-[11px] text-xle-text-secondary/80 space-y-1 font-medium">
+                                  <li>• <span className="font-bold">Khung giờ ưu tiên:</span> Từ 09:00 đến trước 18:30 hàng ngày</li>
+                                  <li>• <span className="font-bold">Thời lượng:</span> Khoảng 30 - 45 phút/ca</li>
+                                </ul>
+                                <p className="text-[11px] text-xle-text-secondary italic font-medium">Ví dụ: 9:30 sáng Thứ 5 (ngày 7/5)</p>
+                              </div>
+                            </div>
                             <input
                               type="text" value={form.speakingSchedule}
                               onChange={(e) => setForm(p => ({...p, speakingSchedule: e.target.value}))}
                               className="h-14 w-full rounded-2xl bg-slate-50 border border-black/[0.05] px-6 font-bold focus:bg-white focus:ring-4 focus:ring-xle-primary/10 outline-none transition-all"
-                              placeholder="Ví dụ: Tối thứ 2"
+                              placeholder="Nhập thời gian của bạn"
                             />
                           </div>
                         </div>
