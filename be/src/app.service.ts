@@ -48,8 +48,8 @@ export class AppService {
     if (!fullName) {
       throw new BadRequestException('Họ và tên là bắt buộc.');
     }
-    if (!/^\d{9,11}$/.test(phone)) {
-      throw new BadRequestException('Số điện thoại phải gồm 9-11 chữ số.');
+    if (!/^\d{10,11}$/.test(phone)) {
+      throw new BadRequestException('Số điện thoại phải gồm 10 hoặc 11 chữ số.');
     }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       throw new BadRequestException('Email không hợp lệ.');
@@ -59,6 +59,22 @@ export class AppService {
     }
     if (motivation === 'Lí do khác' && !otherReason) {
       throw new BadRequestException('Vui lòng nhập lí do khác.');
+    }
+
+    // Check for existing lead with same email or phone
+    const existingLead = await this.leadModel.findOne({
+      $or: [{ email }, { phone }],
+    });
+
+    if (existingLead) {
+      if (existingLead.email === email) {
+        throw new BadRequestException(
+          'Email này đã được đăng ký. Xa Lộ English sẽ sớm liên hệ với bạn nhé!',
+        );
+      }
+      throw new BadRequestException(
+        'Số điện thoại này đã được đăng ký. Xa Lộ English sẽ sớm liên hệ với bạn nhé!',
+      );
     }
 
     const lead = await this.leadModel.create({

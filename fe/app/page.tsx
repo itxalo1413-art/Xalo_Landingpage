@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useMemo, useRef, useState } from "react";
+import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 
 type FormData = {
@@ -28,8 +28,8 @@ function validate(data: FormData): FormErrors {
     errors.fullName = "Vui lòng nhập họ và tên.";
   }
 
-  if (!/^\d{9,11}$/.test(data.phone)) {
-    errors.phone = "Số điện thoại phải gồm 9-11 chữ số.";
+  if (!/^\d{10,11}$/.test(data.phone)) {
+    errors.phone = "Số điện thoại phải gồm 10 hoặc 11 chữ số.";
   }
 
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
@@ -57,6 +57,8 @@ export default function Home() {
     motivation: false,
     otherReason: false,
   });
+
+  const [slotsRemaining, setSlotsRemaining] = useState(100);
 
   const firstInputRef = useRef<HTMLInputElement>(null);
   const formSectionRef = useRef<HTMLElement>(null);
@@ -93,12 +95,46 @@ export default function Home() {
         otherReason: false,
       });
       setIsSubmitted(true);
+      setSlotsRemaining((prev) => Math.max(0, prev - 1));
     } catch (error) {
       setSubmitError(error instanceof Error ? error.message : "Không thể gửi đăng ký.");
     } finally {
       setIsSubmitting(false);
     }
   };
+
+  const [timeLeft, setTimeLeft] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+  });
+
+  useEffect(() => {
+    // Set a relative target date for demo purposes (e.g., 2 days from now)
+    const targetDate = new Date();
+    targetDate.setDate(targetDate.getDate() + 2);
+    targetDate.setHours(targetDate.getHours() + 5);
+
+    const timer = setInterval(() => {
+      const now = new Date().getTime();
+      const distance = targetDate.getTime() - now;
+
+      if (distance < 0) {
+        clearInterval(timer);
+        return;
+      }
+
+      setTimeLeft({
+        days: Math.floor(distance / (1000 * 60 * 60 * 24)),
+        hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+        minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+        seconds: Math.floor((distance % (1000 * 60)) / 1000),
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
 
   const scrollToForm = () => {
     formSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -107,8 +143,38 @@ export default function Home() {
 
   return (
     <main className="relative min-h-screen">
+      {/* Top FOMO Slots Banner */}
+      <div className="bg-[#9494ff] text-white py-2.5 px-6 sticky top-0 z-[60] shadow-xl border-b border-white/10">
+        <div className="mx-auto max-w-7xl flex items-center justify-center gap-3 md:gap-5">
+          <div className="flex items-center gap-2 md:gap-3">
+            <span className="relative flex h-3 w-3">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-90"></span>
+              <span className="relative inline-flex rounded-full h-3 w-3 bg-white shadow-[0_0_10px_rgba(255,255,255,0.8)]"></span>
+            </span>
+            
+            <h2 className="text-[11px] md:text-sm font-black uppercase tracking-tight flex items-center gap-2">
+              Cơ hội cuối: Chỉ còn 
+              <span className="inline-flex items-center justify-center bg-white text-xle-accent px-3 py-1 rounded-lg text-lg md:text-2xl font-black shadow-inner animate-pulse scale-110 mx-1">
+                {slotsRemaining}
+              </span> 
+              suất kiểm tra miễn phí
+            </h2>
+          </div>
+          
+          {/* <button 
+            onClick={scrollToForm}
+            className="hidden sm:flex items-center gap-2 bg-white/10 hover:bg-white/20 px-4 py-1.5 rounded-full border border-white/30 text-[10px] font-bold uppercase tracking-widest transition-all hover:scale-105 active:scale-95 ml-4"
+          >
+            Đăng ký ngay
+            <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </button> */}
+        </div>
+      </div>
+
       {/* Navigation */}
-      <nav className="glass-nav sticky top-0 z-50 w-full px-6 py-4">
+      <nav className="bg-white sticky top-[48px] md:top-[56px] z-50 w-full px-6 py-4 shadow-sm border-b border-black/[0.02]">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4">
           {/* Left: Logo */}
           <div className="flex items-center gap-2 flex-shrink-0">
@@ -444,7 +510,7 @@ export default function Home() {
       </section>
 
       {/* Commitment Banner */}
-      <section className="relative py-20 bg-xle-primary overflow-hidden">
+      <section className="relative py-20 bg-[#9494ff] overflow-hidden">
         <div className="mx-auto max-w-5xl px-6 relative z-10">
           <div className="stripe-card p-10 md:p-16 text-center space-y-10 shadow-2xl bg-white border border-black/[0.03]">
             <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-xle-accent text-white text-xs font-bold uppercase tracking-tight">
@@ -603,12 +669,8 @@ export default function Home() {
       </section>
 
       {/* Footer CTA */}
-      <footer className="stripe-gradient py-16 text-white overflow-hidden relative">
-        {/* <div className="absolute top-0 left-0 w-full h-full opacity-10">
-          <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
-            <path d="M0 100 L50 0 L100 100 Z" fill="white" />
-          </svg>
-        </div> */}
+      <footer className="bg-[#9494ff] py-16 text-white overflow-hidden relative">
+
         <div className="mx-auto relative z-10 flex max-w-4xl flex-col items-center text-center px-6">
           <h2 className="text-2xl md:text-5xl font-extrabold leading-tight">
             Bắt đầu kiểm tra trình độ IELTS <br /> của bạn ngay hôm nay
