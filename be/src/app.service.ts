@@ -8,18 +8,31 @@ type CreateLeadDto = {
   fullName: string;
   phone: string;
   email: string;
-  motivation: string;
-  otherReason?: string;
+  referralSource: string;
+  referralOther?: string;
+  currentLevel: string;
+  targetAim: string;
+  expectedExamTime?: string;
+  testMode: string;
+  testDays: string;
+  testTimeSlot: string;
+  speakingSchedule: string;
 };
 
-const MOTIVATIONS = new Set([
-  'Đi du học',
-  'Định cư nước ngoài',
-  'Đầu vào/ đầu ra đại học',
-  'Thăng tiến trong công việc',
-  'Rất yêu thích tiếng Anh',
-  'Lí do khác',
+const REFERRAL_SOURCES = new Set([
+  'Từ Fanpage Xa Lộ English',
+  'Từ Threads Xa Lộ English',
+  'Từ TikTok Xa Lộ English',
+  'Từ Instagram Xa Lộ English',
+  'Bạn bè giới thiệu',
+  'Mục khác',
 ]);
+
+const TEST_MODES = new Set(['Offline', 'Online']);
+
+const TEST_DAYS = new Set(['Thứ 3', 'Thứ 5', 'Thứ 7']);
+
+const TEST_TIME_SLOTS = new Set(['9:00 - 12:00', '14:00 - 17:00', '19:00 - 22:00']);
 
 const normalizeCredential = (value: string) =>
   value
@@ -42,8 +55,15 @@ export class AppService {
     const fullName = payload.fullName?.trim();
     const phone = payload.phone?.trim();
     const email = payload.email?.trim().toLowerCase();
-    const motivation = payload.motivation?.trim();
-    const otherReason = payload.otherReason?.trim() ?? '';
+    const referralSource = payload.referralSource?.trim();
+    const referralOther = payload.referralOther?.trim() ?? '';
+    const currentLevel = payload.currentLevel?.trim();
+    const targetAim = payload.targetAim?.trim();
+    const expectedExamTime = payload.expectedExamTime?.trim() ?? '';
+    const testMode = payload.testMode?.trim();
+    const testDays = payload.testDays?.trim();
+    const testTimeSlot = payload.testTimeSlot?.trim();
+    const speakingSchedule = payload.speakingSchedule?.trim();
 
     if (!fullName) {
       throw new BadRequestException('Họ và tên là bắt buộc.');
@@ -54,11 +74,29 @@ export class AppService {
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       throw new BadRequestException('Email không hợp lệ.');
     }
-    if (!motivation || !MOTIVATIONS.has(motivation)) {
-      throw new BadRequestException('Vui lòng chọn mục đích học tiếng Anh/IELTS.');
+    if (!referralSource || !REFERRAL_SOURCES.has(referralSource)) {
+      throw new BadRequestException('Vui lòng chọn kênh bạn biết đến thông tin đăng ký.');
     }
-    if (motivation === 'Lí do khác' && !otherReason) {
-      throw new BadRequestException('Vui lòng nhập lí do khác.');
+    if (referralSource === 'Mục khác' && !referralOther) {
+      throw new BadRequestException('Vui lòng nhập mục khác.');
+    }
+    if (!currentLevel) {
+      throw new BadRequestException('Vui lòng nhập trình độ hiện tại.');
+    }
+    if (!targetAim) {
+      throw new BadRequestException('Vui lòng nhập mục tiêu (Aim).');
+    }
+    if (!testMode || !TEST_MODES.has(testMode)) {
+      throw new BadRequestException('Vui lòng chọn hình thức test Online/Offline.');
+    }
+    if (!testDays || !TEST_DAYS.has(testDays)) {
+      throw new BadRequestException('Vui lòng chọn ngày bạn có thể làm bài test.');
+    }
+    if (!testTimeSlot || !TEST_TIME_SLOTS.has(testTimeSlot)) {
+      throw new BadRequestException('Vui lòng chọn khung giờ làm bài test.');
+    }
+    if (!speakingSchedule) {
+      throw new BadRequestException('Vui lòng nhập thời gian bạn có thể test Speaking 1:1.');
     }
 
     // Check for existing lead with same email or phone
@@ -81,16 +119,30 @@ export class AppService {
       fullName,
       phone,
       email,
-      motivation,
-      otherReason,
+      referralSource,
+      referralOther,
+      currentLevel,
+      targetAim,
+      expectedExamTime,
+      testMode,
+      testDays,
+      testTimeSlot,
+      speakingSchedule,
     });
     return {
       id: lead._id.toString(),
       fullName: lead.fullName,
       phone: lead.phone,
       email: lead.email,
-      motivation: (lead as any).motivation,
-      otherReason: (lead as any).otherReason ?? '',
+      referralSource: (lead as any).referralSource,
+      referralOther: (lead as any).referralOther ?? '',
+      currentLevel: (lead as any).currentLevel,
+      targetAim: (lead as any).targetAim,
+      expectedExamTime: (lead as any).expectedExamTime ?? '',
+      testMode: (lead as any).testMode,
+      testDays: (lead as any).testDays,
+      testTimeSlot: (lead as any).testTimeSlot,
+      speakingSchedule: (lead as any).speakingSchedule,
       createdAt: (lead as any).createdAt,
     };
   }
@@ -130,8 +182,15 @@ export class AppService {
       fullName: lead.fullName,
       phone: lead.phone,
       email: lead.email,
-      motivation: (lead as any).motivation,
-      otherReason: (lead as any).otherReason ?? '',
+      referralSource: (lead as any).referralSource,
+      referralOther: (lead as any).referralOther ?? '',
+      currentLevel: (lead as any).currentLevel,
+      targetAim: (lead as any).targetAim,
+      expectedExamTime: (lead as any).expectedExamTime ?? '',
+      testMode: (lead as any).testMode,
+      testDays: (lead as any).testDays,
+      testTimeSlot: (lead as any).testTimeSlot,
+      speakingSchedule: (lead as any).speakingSchedule,
       createdAt: (lead as any).createdAt,
     }));
   }

@@ -17,8 +17,15 @@ export class AppController {
       fullName: string;
       phone: string;
       email: string;
-      motivation: string;
-      otherReason?: string;
+      referralSource: string;
+      referralOther?: string;
+      currentLevel: string;
+      targetAim: string;
+      expectedExamTime?: string;
+      testMode: string;
+      testDays: string;
+      testTimeSlot: string;
+      speakingSchedule: string;
     },
   ) {
     return this.appService.createLead(body);

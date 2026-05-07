@@ -15,10 +15,31 @@ export class Lead {
   email: string;
 
   @Prop({ required: true, trim: true })
-  motivation: string;
+  referralSource: string;
 
   @Prop({ trim: true, default: '' })
-  otherReason?: string;
+  referralOther?: string;
+
+  @Prop({ required: true, trim: true })
+  currentLevel: string;
+
+  @Prop({ required: true, trim: true })
+  targetAim: string;
+
+  @Prop({ trim: true, default: '' })
+  expectedExamTime?: string;
+
+  @Prop({ required: true, trim: true })
+  testMode: string;
+
+  @Prop({ required: true, trim: true })
+  testDays: string;
+
+  @Prop({ required: true, trim: true })
+  testTimeSlot: string;
+
+  @Prop({ required: true, trim: true })
+  speakingSchedule: string;
 }
 
 export const LeadSchema = SchemaFactory.createForClass(Lead);

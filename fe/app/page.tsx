@@ -7,8 +7,15 @@ type FormData = {
   fullName: string;
   phone: string;
   email: string;
-  motivation: string;
-  otherReason: string;
+  referralSource: string;
+  referralOther: string;
+  currentLevel: string;
+  targetAim: string;
+  expectedExamTime: string;
+  testMode: "Offline" | "Online" | "";
+  testDays: string;
+  testTimeSlot: string;
+  speakingSchedule: string;
 };
 
 type FormErrors = Partial<Record<keyof FormData, string>>;
@@ -17,15 +24,22 @@ const INITIAL_FORM: FormData = {
   fullName: "",
   phone: "",
   email: "",
-  motivation: "",
-  otherReason: "",
+  referralSource: "",
+  referralOther: "",
+  currentLevel: "",
+  targetAim: "",
+  expectedExamTime: "",
+  testMode: "",
+  testDays: "",
+  testTimeSlot: "",
+  speakingSchedule: "",
 };
 
 function validate(data: FormData): FormErrors {
   const errors: FormErrors = {};
 
   if (!data.fullName.trim()) {
-    errors.fullName = "Vui lòng nhập họ và tên.";
+    errors.fullName = "Vui lòng nhập họ & tên.";
   }
 
   if (!/^\d{10,11}$/.test(data.phone)) {
@@ -35,11 +49,29 @@ function validate(data: FormData): FormErrors {
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
     errors.email = "Email chưa đúng định dạng.";
   }
-  if (!data.motivation) {
-    errors.motivation = "Vui lòng chọn mục đích học.";
+  if (!data.referralSource) {
+    errors.referralSource = "Vui lòng chọn kênh bạn biết đến.";
   }
-  if (data.motivation === "Lí do khác" && !data.otherReason.trim()) {
-    errors.otherReason = "Vui lòng nhập lí do khác.";
+  if (data.referralSource === "Mục khác" && !data.referralOther.trim()) {
+    errors.referralOther = "Vui lòng nhập mục khác.";
+  }
+  if (!data.currentLevel.trim()) {
+    errors.currentLevel = "Vui lòng nhập trình độ hiện tại.";
+  }
+  if (!data.targetAim.trim()) {
+    errors.targetAim = "Vui lòng nhập mục tiêu (Aim).";
+  }
+  if (!data.testMode) {
+    errors.testMode = "Vui lòng chọn hình thức test.";
+  }
+  if (!data.testDays) {
+    errors.testDays = "Vui lòng chọn ngày có thể làm bài test.";
+  }
+  if (!data.testTimeSlot) {
+    errors.testTimeSlot = "Vui lòng chọn khung giờ thuận tiện.";
+  }
+  if (!data.speakingSchedule.trim()) {
+    errors.speakingSchedule = "Vui lòng nhập thời gian bạn có thể test Speaking.";
   }
 
   return errors;
@@ -54,8 +86,15 @@ export default function Home() {
     fullName: false,
     phone: false,
     email: false,
-    motivation: false,
-    otherReason: false,
+    referralSource: false,
+    referralOther: false,
+    currentLevel: false,
+    targetAim: false,
+    expectedExamTime: false,
+    testMode: false,
+    testDays: false,
+    testTimeSlot: false,
+    speakingSchedule: false,
   });
 
   const [slotsRemaining, setSlotsRemaining] = useState(100);
@@ -67,7 +106,20 @@ export default function Home() {
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setTouched({ fullName: true, phone: true, email: true, motivation: true, otherReason: true });
+    setTouched({
+      fullName: true,
+      phone: true,
+      email: true,
+      referralSource: true,
+      referralOther: true,
+      currentLevel: true,
+      targetAim: true,
+      expectedExamTime: true,
+      testMode: true,
+      testDays: true,
+      testTimeSlot: true,
+      speakingSchedule: true,
+    });
     setSubmitError("");
 
     if (hasErrors) return;
@@ -91,8 +143,15 @@ export default function Home() {
         fullName: false,
         phone: false,
         email: false,
-        motivation: false,
-        otherReason: false,
+        referralSource: false,
+        referralOther: false,
+        currentLevel: false,
+        targetAim: false,
+        expectedExamTime: false,
+        testMode: false,
+        testDays: false,
+        testTimeSlot: false,
+        speakingSchedule: false,
       });
       setIsSubmitted(true);
       setSlotsRemaining((prev) => Math.max(0, prev - 1));
@@ -221,225 +280,221 @@ export default function Home() {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden pt-8 pb-24 md:pt-12 md:pb-32">
-        {/* Background Accents */}
+      <section className="relative overflow-hidden pt-12 pb-24 md:pt-20 md:pb-32 bg-slate-50/30">
         <div className="absolute top-0 right-0 -z-10 h-[600px] w-[600px] translate-x-1/2 -translate-y-1/2 rounded-full bg-xle-secondary opacity-10 blur-3xl" />
-        <div className="absolute bottom-0 left-0 -z-10 h-[400px] w-[400px] -translate-x-1/2 translate-y-1/2 rounded-full bg-xle-accent opacity-5 blur-3xl" />
         
-        <div className="mx-auto grid max-w-7xl grid-cols-1 gap-12 px-6 md:grid-cols-12 md:gap-16">
-          {/* Left Content */}
-          <div className="md:col-span-7 flex flex-col justify-center space-y-6 md:space-y-10">
-            <div className="inline-flex items-center gap-3 rounded-full bg-xle-accent px-6 py-2.5 text-base md:text-lg font-black text-xle-primary border border-xle-primary/20 shadow-sm self-start">
+        <div className="mx-auto max-w-7xl px-6">
+          <div className="text-center mb-16 space-y-6">
+            <div className="inline-flex items-center gap-3 rounded-full bg-xle-accent px-6 py-2.5 text-base md:text-lg font-black text-xle-primary border border-xle-primary/20 shadow-sm mx-auto">
               <span className="relative flex h-3 w-3">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-xle-white/10 opacity-75"></span>
-                <span className="relative inline-flex h-3 w-3 rounded-full bg-white"></span>
+                <span className="relative inline-flex h-3 w-3 rounded-full bg-white shadow-sm"></span>
               </span>
-              <span className=" uppercase font-bold text-white">IELTS Diagnostic Test 2026</span>
+              <span className="uppercase font-bold text-white tracking-wider">IELTS Diagnostic Test 2026</span>
             </div>
-            
-            <h1 className="text-3xl font-extrabold leading-[1.3] md:text-5xl text-foreground">
+            <h1 className="text-4xl font-extrabold leading-tight md:text-6xl text-foreground max-w-4xl mx-auto tracking-tight">
               Kiểm tra IELTS 4 kỹ năng – <br />
-              <span className="text-xle-primary">nhận Bảng Chẩn Bệnh  <br />  miễn phí </span>
+              <span className="text-xle-primary">nhận Bảng Chẩn Bệnh miễn phí</span>
             </h1>
-            
-            
-            
-            <p className="text-md leading-relaxed text-xle-text-secondary md:max-w-xl">
-              Giáo viên 8.0+ trực tiếp chấm và phân tích chi tiết, <span className="font-semibold text-foreground underline decoration-xle-accent/30 decoration-4 underline-offset-4">không sử dụng AI <br/></span> mang lại kết quả sát với thực tế nhất.
+            <p className="text-lg md:text-xl leading-relaxed text-xle-text-secondary max-w-2xl mx-auto font-medium">
+              Hệ thống đánh giá chuyên sâu giúp bạn tiết kiệm thời gian và tối ưu hóa lộ trình đạt band điểm mong muốn.
             </p>
-
-            <div className="flex items-center gap-4 py-2">
-              <p className="text-base md:text-xl font-normal text-xle-text-secondary leading-relaxed">
-                <span className="font-bold text-foreground  decoration-xle-accent/40 decoration-4 underline-offset-4">Hơn 2,000 học viên</span> đã kiểm tra trình độ miễn phí và nhận lộ trình học phù hợp
-              </p>
-            </div>
-
-            <ul className="grid grid-cols-1 gap-y-5 gap-x-20 sm:grid-cols-2">
-              {[
-                "Full test 4 kỹ năng",
-                "Phân tích lỗi cụ thể",
-                "Hình thức linh hoạt: online & offline",
-                "Nhận kết quả thật"
-              ].map((item, idx) => (
-                <li key={idx} className="flex items-center gap-4 text-xle-text-secondary group/li">
-                  <div className="flex-shrink-0 flex h-8 w-8 items-center justify-center rounded-full bg-xle-primary/10 group-hover/li:bg-xle-primary/20 transition-colors">
-                    <svg className="h-4 w-4 text-xle-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={4} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                  <span className="font-bold text-base md:text-lg text-foreground/80 whitespace-nowrap">{item}</span>
-                </li>
-              ))}
-            </ul>
           </div>
 
-          {/* Right Form Card */}
-          <div className="md:col-span-5 relative group mt-8 md:mt-0">
-            {/* Visual highlight glow */}
-            <div className="absolute -inset-1.5 bg-gradient-to-br from-xle-primary/30 via-xle-accent/20 to-xle-primary/30 rounded-[2.5rem] opacity-70 blur-xl group-hover:opacity-100 transition-opacity duration-500" />
-            
-            <section
-              ref={formSectionRef}
-              className="stripe-card relative overflow-hidden p-8 md:p-10 border-2 border-xle-primary/20 shadow-[0_20px_50px_rgba(0,0,0,0.1)] bg-white/95 backdrop-blur-sm"
-            >
-
-              {!isSubmitted ? (
-                <form className="space-y-6" onSubmit={handleSubmit}>
-                  <div className="space-y-2 relative text-center flex flex-col items-center">
-                    <div className=" px-3 py-1 rounded-md text-xle-primary text-[14px] font-bold uppercase tracking-tight mb-2">
-                      Đăng ký ngay tại đây
-                    </div>
-                    <h2 className="text-2xl md:text-3xl font-black text-foreground leading-tight tracking-tight">
-                      Nhận Bảng Chẩn Bệnh <br/>miễn phí
-                    </h2>
-                    <p className="text-sm text-xle-text-secondary font-medium max-w-sm">Cung cấp thông tin chính xác để Xa Lộ English có thể liên hệ sắp xếp lịch kiểm tra cho bạn sớm nhé.</p>
-                  </div>
-
-                  <div className="space-y-4">
-                    <div className="space-y-1.5 flex flex-col gap-1">
-                      <label className="text-xs font-bold tracking-tight text-xle-text-secondary" htmlFor="fullName">
-                        Họ và tên
-                      </label>
-                      <input
-                        ref={firstInputRef}
-                        id="fullName"
-                        type="text"
-                        value={form.fullName}
-                        onBlur={() => setTouched((prev) => ({ ...prev, fullName: true }))}
-                        onChange={(e) => setForm((prev) => ({ ...prev, fullName: e.target.value }))}
-                        className="h-12 w-full rounded-lg bg-xle-muted/30 border border-black/[0.08] px-4 font-medium transition-all focus:bg-white focus:ring-2 focus:ring-xle-primary/20 focus:border-xle-primary outline-none"
-                        placeholder="Nguyễn Văn A"
-                      />
-                      {touched.fullName && errors.fullName && (
-                        <p className="text-xs font-medium text-red-500 mt-1">{errors.fullName}</p>
-                      )}
-                    </div>
-
-                    <div className="space-y-1.5 flex flex-col gap-1">
-                      <label className="text-xs font-bold tracking-tight text-xle-text-secondary" htmlFor="phone">
-                        Số điện thoại
-                      </label>
-                      <input
-                        id="phone"
-                        type="tel"
-                        value={form.phone}
-                        onBlur={() => setTouched((prev) => ({ ...prev, phone: true }))}
-                        onChange={(e) =>
-                          setForm((prev) => ({
-                            ...prev,
-                            phone: e.target.value.replace(/\D/g, ""),
-                          }))
-                        }
-                        className="h-12 w-full rounded-lg bg-xle-muted/30 border border-black/[0.08] px-4 font-medium transition-all focus:bg-white focus:ring-2 focus:ring-xle-primary/20 focus:border-xle-primary outline-none"
-                        placeholder="0912 345 678"
-                      />
-                      {touched.phone && errors.phone && (
-                        <p className="text-xs font-medium text-red-500 mt-1">{errors.phone}</p>
-                      )}
-                    </div>
-
-                    <div className="space-y-1.5 flex flex-col gap-1">
-                      <label className="text-xs font-bold tracking-tight text-xle-text-secondary" htmlFor="email">
-                        Email
-                      </label>
-                      <input
-                        id="email"
-                        type="email"
-                        value={form.email}
-                        onBlur={() => setTouched((prev) => ({ ...prev, email: true }))}
-                        onChange={(e) => setForm((prev) => ({ ...prev, email: e.target.value }))}
-                        className="h-12 w-full rounded-lg bg-xle-muted/30 border border-black/[0.08] px-4 font-medium transition-all focus:bg-white focus:ring-2 focus:ring-xle-primary/20 focus:border-xle-primary outline-none"
-                        placeholder="name@example.com"
-                      />
-                      {touched.email && errors.email && (
-                        <p className="text-xs font-medium text-red-500 mt-1">{errors.email}</p>
-                      )}
-                    </div>
-
-                    <div className="space-y-1.5 flex flex-col gap-1">
-                      <label
-                        className="text-xs font-bold tracking-tight text-xle-text-secondary"
-                        htmlFor="motivation"
-                      >
-                        Mục đích học tiếng Anh/ IELTS của bạn
-                      </label>
-                      <select
-                        id="motivation"
-                        value={form.motivation}
-                        onBlur={() => setTouched((prev) => ({ ...prev, motivation: true }))}
-                        onChange={(e) =>
-                          setForm((prev) => ({
-                            ...prev,
-                            motivation: e.target.value,
-                            otherReason: e.target.value === "Lí do khác" ? prev.otherReason : "",
-                          }))
-                        }
-                        className="h-12 w-full appearance-none rounded-lg bg-xle-muted/30 border border-black/[0.08] px-4 pr-10 font-medium transition-all focus:bg-white focus:ring-2 focus:ring-xle-primary/20 focus:border-xle-primary outline-none bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20fill%3D%22none%22%20viewBox%3D%220%200%2024%2024%22%20stroke%3D%22currentColor%22%20stroke-width%3D%222%22%3E%3Cpath%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20d%3D%22M19%209l-7%207-7-7%22%2F%3E%3C%2Fsvg%3E')] bg-[length:1.25rem_1.25rem] bg-[right_0.75rem_center] bg-no-repeat"
-                      >
-                        <option value="">Chọn mục đích</option>
-                        <option value="Đi du học">Đi du học</option>
-                        <option value="Định cư nước ngoài">Định cư nước ngoài</option>
-                        <option value="Đầu vào/ đầu ra đại học">Đầu vào/ đầu ra đại học</option>
-                        <option value="Thăng tiến trong công việc">Thăng tiến trong công việc</option>
-                        <option value="Rất yêu thích tiếng Anh">Rất yêu thích tiếng Anh</option>
-                        <option value="Lí do khác">Lí do khác</option>
-                      </select>
-                      {touched.motivation && errors.motivation && (
-                        <p className="text-xs font-medium text-red-500 mt-1">{errors.motivation}</p>
-                      )}
-                    </div>
-
-                    {form.motivation === "Lí do khác" && (
-                      <div className="space-y-1.5">
-                        <label
-                          className="text-xs font-bold uppercase tracking-tight text-xle-text-secondary"
-                          htmlFor="otherReason"
-                        >
-                          Lí do khác
-                        </label>
-                        <input
-                          id="otherReason"
-                          type="text"
-                          value={form.otherReason}
-                          onBlur={() => setTouched((prev) => ({ ...prev, otherReason: true }))}
-                          onChange={(e) =>
-                            setForm((prev) => ({ ...prev, otherReason: e.target.value }))
-                          }
-                          className="h-12 w-full rounded-lg bg-xle-muted/30 border border-black/[0.08] px-4 font-medium transition-all focus:bg-white focus:ring-2 focus:ring-xle-primary/20 focus:border-xle-primary outline-none"
-                          placeholder="Nhập lí do của bạn"
-                        />
-                        {touched.otherReason && errors.otherReason && (
-                          <p className="text-xs font-medium text-red-500 mt-1">{errors.otherReason}</p>
-                        )}
+          <div className="max-w-5xl mx-auto relative">
+              <div className="absolute -inset-4 bg-gradient-to-br from-xle-primary/10 via-xle-accent/5 to-xle-primary/10 rounded-[3rem] opacity-70 blur-3xl" />
+              <section
+                ref={formSectionRef}
+                className="relative overflow-hidden rounded-[2.5rem] border border-black/[0.05] shadow-[0_40px_120px_rgba(0,0,0,0.1)] bg-white/95 backdrop-blur-2xl"
+              >
+                {!isSubmitted ? (
+                  <form className="p-8 md:p-12 space-y-10" onSubmit={handleSubmit}>
+                    <div className="text-center space-y-3">
+                      <div className="inline-block px-4 py-1.5 text-xle-primary text-[10px] font-bold uppercase tracking-tight mb-1">
+                        Form đăng ký kiểm tra
                       </div>
-                    )}
-                  </div>
+                      <h2 className="text-3xl md:text-5xl font-black text-foreground leading-tight tracking-tight">
+                        Nhận Bảng Chẩn Bệnh
+                      </h2>
+                      <p className="text-base text-xle-text-secondary font-medium">Hoàn tất các bước dưới đây để bắt đầu</p>
+                    </div>
 
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="button-primary h-14 w-full text-base flex items-center justify-center gap-2"
-                  >
-                    {isSubmitting ? (
-                      <>
-                        <svg className="animate-spin h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                        </svg>
-                        Đang xử lý...
-                      </>
-                    ) : (
-                      "Nhận Bảng Chẩn Bệnh miễn phí"
-                    )}
-                  </button>
-                  
-                  <p className="text-center text-[10px] text-xle-text-secondary uppercase tracking-tight font-bold">
-                    Thông tin của bạn được bảo mật tuyệt đối
-                  </p>
-                  {submitError && (
-                    <p className="text-center text-sm font-semibold text-red-500">{submitError}</p>
-                  )}
-                </form>
+                    <div className="space-y-12">
+                      {/* Section 1 */}
+                      <div className="space-y-6">
+                        <div className="flex items-center gap-4">
+                          <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-xle-primary text-white text-lg font-black shadow-lg">1</span>
+                          <p className="text-md font-black">Thông tin cá nhân</p>
+                          <div className="h-px flex-1 bg-black/[0.05]" />
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                          <div className="space-y-2 flex flex-col gap-2">
+                            <label className="text-[14px] font-bold text-xle-text-secondary/80 ml-1">Họ &amp; tên *</label>
+                            <input
+                              ref={firstInputRef} type="text" value={form.fullName}
+                              onBlur={() => setTouched(p => ({...p, fullName: true}))}
+                              onChange={(e) => setForm(p => ({...p, fullName: e.target.value}))}
+                              className="h-14 w-full rounded-2xl bg-slate-50 border border-black/[0.05] px-6 font-bold focus:bg-white focus:ring-4 focus:ring-xle-primary/10 outline-none transition-all"
+                              placeholder="Nguyễn Văn A"
+                            />
+                            {touched.fullName && errors.fullName && <p className="text-[14px] font-bold text-red-500 mt-1 uppercase ml-1">{errors.fullName}</p>}
+                          </div>
+                          <div className="space-y-2 flex flex-col gap-2">
+                            <label className="text-[14px] font-bold text-xle-text-secondary/80 ml-1">Số điện thoại *</label>
+                            <input
+                              type="tel" value={form.phone}
+                              onBlur={() => setTouched(p => ({...p, phone: true}))}
+                              onChange={(e) => setForm(p => ({...p, phone: e.target.value.replace(/\D/g, "")}))}
+                              className="h-14 w-full rounded-2xl bg-slate-50 border border-black/[0.05] px-6 font-bold focus:bg-white focus:ring-4 focus:ring-xle-primary/10 outline-none transition-all"
+                              placeholder="0912345678"
+                            />
+                            {touched.phone && errors.phone && <p className="text-[10px] font-bold text-red-500 mt-1 uppercase ml-1">{errors.phone}</p>}
+                          </div>
+                        </div>
+                        <div className="space-y-2 flex flex-col gap-2">
+                          <label className="text-[14px] font-black text-xle-text-secondary/80 ml-1">Email *</label>
+                          <input
+                            type="email" value={form.email}
+                            onBlur={() => setTouched(p => ({...p, email: true}))}
+                            onChange={(e) => setForm(p => ({...p, email: e.target.value}))}
+                            className="h-14 w-full rounded-2xl bg-slate-50 border border-black/[0.05] px-6 font-bold focus:bg-white focus:ring-4 focus:ring-xle-primary/10 outline-none transition-all"
+                            placeholder="example@gmail.com"
+                          />
+                          {touched.email && errors.email && <p className="text-[10px] font-bold text-red-500 mt-1 uppercase ml-1">{errors.email}</p>}
+                        </div>
+                      </div>
+
+                      {/* Section 2 */}
+                      <div className="space-y-6">
+                        <div className="flex items-center gap-4">
+                          <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-xle-primary text-white text-lg font-black shadow-lg">2</span>
+                          <p className="text-md font-bold">Mục tiêu & Dự kiến</p>
+                          <div className="h-px flex-1 bg-black/[0.05]" />
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                          <div className="space-y-2 flex flex-col gap-2">
+                            <label className="text-[14px] font-bold text-xle-text-secondary/80 ml-1">Trình độ hiện tại *</label>
+                            <input
+                              type="text" value={form.currentLevel}
+                              onBlur={() => setTouched(p => ({...p, currentLevel: true}))}
+                              onChange={(e) => setForm(p => ({...p, currentLevel: e.target.value}))}
+                              className="h-14 w-full rounded-2xl bg-slate-50 border border-black/[0.05] px-6 font-bold focus:bg-white focus:ring-4 focus:ring-xle-primary/10 outline-none transition-all"
+                              placeholder="Ví dụ: 4.5"
+                            />
+                            {touched.currentLevel && errors.currentLevel && <p className="text-[10px] font-bold text-red-500 mt-1 uppercase ml-1">{errors.currentLevel}</p>}
+                          </div>
+                          <div className="space-y-2 flex flex-col gap-2">
+                            <label className="text-[14px] font-bold text-xle-text-secondary/80 ml-1">Mục tiêu *</label>
+                            <input
+                              type="text" value={form.targetAim}
+                              onBlur={() => setTouched(p => ({...p, targetAim: true}))}
+                              onChange={(e) => setForm(p => ({...p, targetAim: e.target.value}))}
+                              className="h-14 w-full rounded-2xl bg-slate-50 border border-black/[0.05] px-6 font-bold focus:bg-white focus:ring-4 focus:ring-xle-primary/10 outline-none transition-all"
+                              placeholder="Ví dụ: 7.0+"
+                            />
+                            {touched.targetAim && errors.targetAim && <p className="text-[10px] font-bold text-red-500 mt-1 uppercase ml-1">{errors.targetAim}</p>}
+                          </div>
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                          <div className="space-y-2 flex flex-col gap-2">
+                            <label className="text-[14px] font-bold text-xle-text-secondary/80 ml-1">Kênh biết đến *</label>
+                            <select
+                              value={form.referralSource}
+                              onChange={(e) => setForm(p => ({...p, referralSource: e.target.value}))}
+                              className="h-14 w-full appearance-none rounded-2xl bg-slate-50 border border-black/[0.05] px-6 font-bold focus:bg-white focus:ring-4 focus:ring-xle-primary/10 outline-none transition-all bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20fill%3D%22none%22%20viewBox%3D%220%200%2024%2024%22%20stroke%3D%22%236b7280%22%20stroke-width%3D%222%22%3E%3Cpath%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20d%3D%22M19%209l-7%207-7-7%22%2F%3E%3C%2Fsvg%3E')] bg-[length:1.25rem_1.25rem] bg-[right_1.5rem_center] bg-no-repeat"
+                            >
+                              <option value="">Chọn kênh</option>
+                              <option value="Fanpage">Fanpage</option>
+                              <option value="TikTok">TikTok</option>
+                              <option value="Bạn bè">Bạn bè</option>
+                              <option value="Mục khác">Mục khác:</option>
+                            </select>
+                            {touched.referralSource && errors.referralSource && <p className="text-[10px] font-bold text-red-500 mt-1 uppercase ml-1">{errors.referralSource}</p>}
+                          </div>
+                          <div className="space-y-2 flex flex-col gap-2">
+                            <label className="text-[14px] font-bold text-xle-text-secondary/80 ml-1">Dự kiến thi</label>
+                            <input
+                              type="text" value={form.expectedExamTime}
+                              onChange={(e) => setForm(p => ({...p, expectedExamTime: e.target.value}))}
+                              className="h-14 w-full rounded-2xl bg-slate-50 border border-black/[0.05] px-6 font-bold focus:bg-white focus:ring-4 focus:ring-xle-primary/10 outline-none transition-all"
+                              placeholder="Tháng 12/2026"
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Section 3 */}
+                      <div className="space-y-6">
+                        <div className="flex items-center gap-4">
+                          <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-xle-primary text-white text-lg font-black shadow-lg">3</span>
+                          <p className="text-md font-bold text-foreground">Lịch kiểm tra</p>
+                          <div className="h-px flex-1 bg-black/[0.05]" />
+                        </div>
+                        <div className="space-y-4 flex flex-col gap-2">
+                          <p className="text-[14px] font-bold text-xle-text-secondary/80 ml-1">Hình thức *</p>
+                          <div className="grid grid-cols-2 gap-4">
+                            {["Online", "Offline"].map(mode => (
+                              <button
+                                key={mode} type="button"
+                                onClick={() => setForm(p => ({...p, testMode: mode as any}))}
+                                className={`h-14 rounded-2xl text-xs font-bold border transition-all ${form.testMode === mode ? 'bg-xle-primary text-white border-xle-primary shadow-xl shadow-xle-primary/20' : 'bg-slate-50 text-foreground/40 border-black/[0.05]'}`}
+                              >
+                                {mode}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                        <div className="space-y-4 flex flex-col gap-2">
+                          <p className="text-[14px] font-bold text-xle-text-secondary/80 ml-1">Ngày làm bài (L/R/W) *</p>
+                          <div className="grid grid-cols-3 gap-3">
+                            {["Thứ 3", "Thứ 5", "Thứ 7"].map(day => (
+                              <button
+                                key={day} type="button"
+                                onClick={() => setForm(p => ({...p, testDays: day}))}
+                                className={`h-12 rounded-xl text-[10px] font-bold border transition-all ${form.testDays === day ? 'bg-xle-primary/10 text-xle-primary border-xle-primary shadow-sm' : 'bg-slate-50 text-foreground/40 border-black/[0.05]'}`}
+                              >
+                                {day}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                          <div className="space-y-2 flex flex-col gap-2">
+                            <label className="text-[14px] font-bold text-xle-text-secondary/80 ml-1">Ca thi mong muốn *</label>
+                            <select
+                              value={form.testTimeSlot}
+                              onChange={(e) => setForm(p => ({...p, testTimeSlot: e.target.value}))}
+                              className="h-14 w-full appearance-none rounded-2xl bg-slate-50 border border-black/[0.05] px-6 font-medium focus:bg-white focus:ring-4 focus:ring-xle-primary/10 outline-none transition-all bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20fill%3D%22none%22%20viewBox%3D%220%200%2024%2024%22%20stroke%3D%22%236b7280%22%20stroke-width%3D%222%22%3E%3Cpath%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20d%3D%22M19%209l-7%207-7-7%22%2F%3E%3C%2Fsvg%3E')] bg-[length:1.25rem_1.25rem] bg-[right_1.5rem_center] bg-no-repeat"
+                            >
+                              <option value="">Chọn khung giờ</option>
+                              <option value="9:00 - 12:00">9:00 - 12:00</option>
+                              <option value="14:00 - 17:00">14:00 - 17:00</option>
+                              <option value="19:00 - 22:00">19:00 - 22:00</option>
+                            </select>
+                          </div>
+                          <div className="space-y-2 flex flex-col gap-2">
+                            <label className="text-[14px] font-bold text-xle-text-secondary/80 ml-1">Lịch Speaking *</label>
+                            <input
+                              type="text" value={form.speakingSchedule}
+                              onChange={(e) => setForm(p => ({...p, speakingSchedule: e.target.value}))}
+                              className="h-14 w-full rounded-2xl bg-slate-50 border border-black/[0.05] px-6 font-bold focus:bg-white focus:ring-4 focus:ring-xle-primary/10 outline-none transition-all"
+                              placeholder="Ví dụ: Tối thứ 2"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="pt-8">
+                      <button
+                        type="submit" disabled={isSubmitting}
+                        className="w-full h-16 rounded-3xl bg-xle-primary text-white font-bold uppercase tracking-tight text-sm shadow-2xl shadow-xle-primary/40 hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50"
+                      >
+                        {isSubmitting ? "Đang xử lý..." : "Hoàn tất đăng ký ngay"}
+                      </button>
+                      {submitError && <p className="text-center text-xs font-bold text-red-500 mt-6 uppercase tracking-widest">{submitError}</p>}
+                    </div>
+                  </form>
               ) : (
                 <div className="flex flex-col items-center justify-center space-y-6 py-12 text-center animate-in fade-in zoom-in duration-500">
                   <div className="flex h-20 w-20 items-center justify-center rounded-full bg-green-100 text-green-600">
@@ -454,11 +509,11 @@ export default function Home() {
                     </p>
                   </div>
                 </div>
-              )}
-            </section>
+                )}
+              </section>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
       {/* Proof Section */}
       <section className="bg-white py-16 md:py-24">

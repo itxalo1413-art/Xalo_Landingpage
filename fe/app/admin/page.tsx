@@ -8,8 +8,15 @@ type Lead = {
   fullName: string;
   phone: string;
   email: string;
-  motivation: string;
-  otherReason?: string;
+  referralSource: string;
+  referralOther?: string;
+  currentLevel: string;
+  targetAim: string;
+  expectedExamTime?: string;
+  testMode: string;
+  testDays: string;
+  testTimeSlot: string;
+  speakingSchedule: string;
   createdAt: string;
 };
 
@@ -88,7 +95,12 @@ export default function AdminPage() {
                   <th className="px-4 py-3 font-bold">Họ tên</th>
                   <th className="px-4 py-3 font-bold">Số điện thoại</th>
                   <th className="px-4 py-3 font-bold">Email</th>
-                  <th className="px-4 py-3 font-bold">Mục đích học</th>
+                  <th className="px-4 py-3 font-bold">Nguồn</th>
+                  <th className="px-4 py-3 font-bold">Trình độ</th>
+                  <th className="px-4 py-3 font-bold">Aim</th>
+                  <th className="px-4 py-3 font-bold">Hình thức</th>
+                  <th className="px-4 py-3 font-bold">Ngày + giờ</th>
+                  <th className="px-4 py-3 font-bold">Speaking 1:1</th>
                   <th className="px-4 py-3 font-bold">Thời gian</th>
                 </tr>
               </thead>
@@ -99,10 +111,27 @@ export default function AdminPage() {
                     <td className="px-4 py-3">{lead.phone}</td>
                     <td className="px-4 py-3">{lead.email}</td>
                     <td className="px-4 py-3">
-                      {lead.motivation}
-                      {lead.motivation === "Lí do khác" && lead.otherReason
-                        ? `: ${lead.otherReason}`
+                      {lead.referralSource}
+                      {lead.referralSource === "Mục khác" && lead.referralOther
+                        ? `: ${lead.referralOther}`
                         : ""}
+                    </td>
+                    <td className="px-4 py-3">{lead.currentLevel}</td>
+                    <td className="px-4 py-3">
+                      <div className="font-semibold">{lead.targetAim}</div>
+                      {lead.expectedExamTime ? (
+                        <div className="text-xs text-xle-text-secondary mt-1">
+                          Thi: {lead.expectedExamTime}
+                        </div>
+                      ) : null}
+                    </td>
+                    <td className="px-4 py-3 font-semibold">{lead.testMode}</td>
+                    <td className="px-4 py-3">
+                      <div className="font-semibold">{lead.testTimeSlot}</div>
+                      <div className="text-xs text-xle-text-secondary mt-1">{lead.testDays}</div>
+                    </td>
+                    <td className="px-4 py-3 max-w-[320px] whitespace-pre-wrap">
+                      {lead.speakingSchedule}
                     </td>
                     <td className="px-4 py-3">
                       {new Date(lead.createdAt).toLocaleString("vi-VN")}
