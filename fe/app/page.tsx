@@ -331,12 +331,12 @@ export default function Home() {
               </span>
               <span className="uppercase font-bold text-white tracking-wider">IELTS Diagnostic Test 2026</span>
             </div>
-            <h1 className="text-4xl font-extrabold leading-tight md:text-6xl text-foreground max-w-4xl mx-auto tracking-tight">
+            <h1 className="text-3xl font-extrabold leading-tight md:text-6xl text-foreground max-w-4xl mx-auto tracking-tight">
               Kiểm tra IELTS 4 kỹ năng – <br />
               <span className="text-xle-primary">nhận Bảng Chẩn Bệnh miễn phí</span>
             </h1>
             <p className="text-lg md:text-xl leading-relaxed text-xle-text-secondary max-w-2xl mx-auto font-medium">
-              Hệ thống đánh giá chuyên sâu giúp bạn tiết kiệm thời gian và tối ưu hóa lộ trình đạt band điểm mong muốn.
+              Đánh giá chuyên sâu trực tiếp bởi giáo viên, giúp bạn tối ưu lộ trình <br/> và sớm đạt band điểm mục tiêu.
             </p>
           </div>
 
@@ -352,7 +352,7 @@ export default function Home() {
                       <div className="inline-block px-4 py-1.5 text-xle-primary text-[14px] font-bold uppercase tracking-tight mb-1">
                         Đăng ký ngay tại đây
                       </div>
-                      <h2 className="text-3xl md:text-5xl font-black text-foreground leading-tight tracking-tight">
+                      <h2 className="text-2xl md:text-5xl font-black text-foreground leading-tight tracking-tight">
                         Nhận Bảng Chẩn Bệnh
                       </h2>
                       <p className="text-base text-xle-text-secondary font-medium">Hoàn tất các bước dưới đây để bắt đầu</p>
@@ -661,7 +661,7 @@ export default function Home() {
         <div className="mx-auto max-w-7xl px-6">
           <div className="mb-12 md:mb-16 text-center">
             <h2 className="text-xl md:text-3xl font-extrabold text-foreground leading-tight">TẠI SAO NÊN CHỌN TEST TRÌNH ĐỘ TẠI XA LỘ ENGLISH?</h2>
-            <p className="mt-4 text-xle-text-secondary max-w-4xl mx-auto text-base md:text-lg">Hệ thống đánh giá chuyên sâu giúp bạn tiết kiệm thời gian và tối ưu hóa lộ trình đạt band điểm mong muốn.</p>
+            <p className="mt-4 text-xle-text-secondary max-w-4xl mx-auto text-base md:text-lg">Giáo viên trực tiếp đánh giá chi tiết trình độ, giúp bạn xây dựng lộ trình học hiệu quả <br/> và nhanh chóng chạm band điểm mong muốn.</p>
           </div>
           
           <div className="grid grid-cols-1 gap-6 md:gap-8 md:grid-cols-2">
@@ -679,7 +679,7 @@ export default function Home() {
 
               {
                 title: "Bảng Chẩn Bệnh độc quyền",
-                content: "Hệ thống phân tích chuyên sâu điểm mạnh, điểm yếu và gợi ý cải thiện cụ thể cho từng kỹ năng.",
+                content: "Giáo viên đánh giá 1:1 chuyên sâu, giúp bạn nhận diện điểm mạnh – điểm yếu và cải thiện đúng trọng tâm.",
                 icon: (
                   <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
@@ -899,7 +899,7 @@ export default function Home() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
             </span>
-            Liên hệ Xa Lộ English:
+            Liên hệ để được tư vấn:
           </span>
         </div>
         <a

@@ -3,6 +3,8 @@ import { InjectModel } from '@nestjs/mongoose';
 import { ConfigService } from '@nestjs/config';
 import { Model } from 'mongoose';
 import { Lead, LeadDocument } from './lead.schema';
+import { google } from 'googleapis';
+import * as path from 'path';
 
 type CreateLeadDto = {
   fullName: string;
@@ -32,7 +34,11 @@ const TEST_MODES = new Set(['Offline', 'Online']);
 
 const TEST_DAYS = new Set(['Thứ 3', 'Thứ 5', 'Thứ 7']);
 
-const TEST_TIME_SLOTS = new Set(['9:00 - 12:00', '14:00 - 17:00', '19:00 - 22:00']);
+const TEST_TIME_SLOTS = new Set([
+  'Ca sáng (9:00 - 12:00)',
+  'Ca chiều (14:00 - 17:00)',
+  'Ca tối (18:30 - 21:30)',
+]);
 
 const normalizeCredential = (value: string) =>
   value
@@ -135,6 +141,12 @@ export class AppService {
       testTimeSlot,
       speakingSchedule,
     });
+
+    // Sync to Google Sheet asynchronously
+    this.syncToGoogleSheet(lead).catch((err) =>
+      console.error('[AppService] Google Sheet sync background error:', err),
+    );
+
     return {
       id: lead._id.toString(),
       fullName: lead.fullName,
@@ -199,5 +211,55 @@ export class AppService {
       speakingSchedule: (lead as any).speakingSchedule,
       createdAt: (lead as any).createdAt,
     }));
+  }
+
+  private async syncToGoogleSheet(lead: any) {
+    try {
+      const sheetId = this.configService.get<string>('GOOGLE_SHEET_ID');
+      if (!sheetId) {
+        console.warn('[AppService] GOOGLE_SHEET_ID not found in config, skipping sync');
+        return;
+      }
+
+      const auth = new google.auth.GoogleAuth({
+        keyFile: path.join(process.cwd(), 'google-credentials.json'),
+        scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+      });
+
+      const sheets = google.sheets({ version: 'v4', auth });
+
+      const values = [
+        [
+          new Date(lead.createdAt || Date.now()).toLocaleString('vi-VN', {
+            timeZone: 'Asia/Ho_Chi_Minh',
+          }),
+          lead.fullName,
+          `'${lead.phone}`, // Use tick to force string in Sheets (prevent losing leading zero)
+          lead.email,
+          lead.referralSource + (lead.referralOther ? ` (${lead.referralOther})` : ''),
+          lead.currentLevel,
+          lead.targetAim,
+          lead.expectedExamTime || '',
+          lead.testMode,
+          lead.testDays,
+          lead.testTimeSlot,
+          lead.speakingSchedule,
+        ],
+      ];
+
+      // We use 'Landing page!A1' to append to the specific sheet named "Landing page"
+      await sheets.spreadsheets.values.append({
+        spreadsheetId: sheetId,
+        range: 'Landing page!A1',
+        valueInputOption: 'USER_ENTERED',
+        requestBody: {
+          values,
+        },
+      });
+
+      console.log(`[AppService] Lead ${lead.email} synced to Google Sheet successfully`);
+    } catch (error) {
+      console.error('[AppService] Failed to sync to Google Sheet:', error);
+    }
   }
 }
