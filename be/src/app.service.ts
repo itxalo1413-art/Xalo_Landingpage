@@ -143,6 +143,10 @@ export class AppService {
       speakingSchedule,
     });
 
+    console.log(
+      `[AppService] Lead created id=${lead._id.toString()} email=${lead.email} phone=${lead.phone}`,
+    );
+
     // Sync to Google Sheet asynchronously
     this.syncToGoogleSheet(lead).catch((err) =>
       console.error('[AppService] Google Sheet sync background error:', err),
@@ -228,6 +232,9 @@ export class AppService {
       });
 
       const sheets = google.sheets({ version: 'v4', auth });
+      console.log(
+        `[AppService] Google Sheet sync started for lead=${lead._id?.toString?.() ?? 'unknown'}`,
+      );
 
       const values = [
         [

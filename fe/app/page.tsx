@@ -35,6 +35,34 @@ const INITIAL_FORM: FormData = {
   speakingSchedule: "",
 };
 
+const INITIAL_SLOTS = 86;
+const FLOOR_SLOTS = 19;
+const RESET_SLOTS = 25;
+
+function getCycleResetStart(cycle: number) {
+  return RESET_SLOTS;
+}
+
+function getDisplaySlots(registeredCount: number) {
+  let remainingSubmissions = Math.max(0, Math.floor(registeredCount));
+  let cycle = 0;
+  let cycleStart = INITIAL_SLOTS;
+
+  while (true) {
+    const stepsToFloor = cycleStart - FLOOR_SLOTS;
+    if (remainingSubmissions <= stepsToFloor) {
+      return cycleStart - remainingSubmissions;
+    }
+    remainingSubmissions -= stepsToFloor + 1;
+    cycle += 1;
+    cycleStart = getCycleResetStart(cycle);
+  }
+}
+
+function logSlotsCheckpoint(source: "bootstrap" | "sync" | "submit", count: number, slots: number) {
+  console.log(`[Slots] source=${source} count=${count} display=${slots} floor=${FLOOR_SLOTS} reset=${RESET_SLOTS}`);
+}
+
 function validate(data: FormData): FormErrors {
   const errors: FormErrors = {};
 
@@ -97,13 +125,30 @@ export default function Home() {
     speakingSchedule: false,
   });
 
-  const [slotsRemaining, setSlotsRemaining] = useState<number>(100);
+  const [slotsRemaining, setSlotsRemaining] = useState<number>(INITIAL_SLOTS);
+  const [registeredCount, setRegisteredCount] = useState<number>(0);
 
   // Load initial slots from localStorage to avoid flicker
   useEffect(() => {
+    const cachedCount = localStorage.getItem('xle_registered_count');
+    if (cachedCount) {
+      const parsedCount = Number.parseInt(cachedCount, 10);
+      if (Number.isFinite(parsedCount) && parsedCount >= 0) {
+        const slots = getDisplaySlots(parsedCount);
+        setRegisteredCount(parsedCount);
+        setSlotsRemaining(slots);
+        logSlotsCheckpoint("bootstrap", parsedCount, slots);
+        return;
+      }
+    }
+
     const cached = localStorage.getItem('xle_slots_remaining');
     if (cached) {
-      setSlotsRemaining(parseInt(cached));
+      const parsed = Number.parseInt(cached, 10);
+      if (Number.isFinite(parsed)) {
+        setSlotsRemaining(parsed);
+        console.log(`[Slots] source=bootstrap_legacy_cache display=${parsed}`);
+      }
     }
   }, []);
 
@@ -161,10 +206,14 @@ export default function Home() {
         testTimeSlot: false,
         speakingSchedule: false,
       });
-      setSlotsRemaining((prev) => {
-        const next = Math.max(0, prev - 1);
-        localStorage.setItem('xle_slots_remaining', next.toString());
-        return next;
+      setRegisteredCount((prev) => {
+        const nextCount = prev + 1;
+        const nextSlots = getDisplaySlots(nextCount);
+        setSlotsRemaining(nextSlots);
+        localStorage.setItem('xle_registered_count', nextCount.toString());
+        localStorage.setItem('xle_slots_remaining', nextSlots.toString());
+        logSlotsCheckpoint("submit", nextCount, nextSlots);
+        return nextCount;
       });
       setIsSubmitted(true);
     } catch (error) {
@@ -182,23 +231,27 @@ export default function Home() {
   });
 
   useEffect(() => {
-    // Fetch actual registration count from backend
+    // Sync display slots with real lead count from backend
     const fetchCount = async () => {
       try {
         const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:4000";
         const response = await fetch(`${baseUrl}/leads/count?t=${Date.now()}`);
-        if (response.ok) {
-          const data = await response.json();
-          const registeredCount = typeof data.count === 'number' ? data.count : 0;
-          const remaining = Math.max(0, 100 - registeredCount);
-          console.log(`[Sync] Slots remaining updated: ${remaining}`);
-          setSlotsRemaining(remaining);
-          localStorage.setItem('xle_slots_remaining', remaining.toString());
-        }
+        if (!response.ok) return;
+
+        const data = (await response.json()) as { count?: number };
+        const count = typeof data.count === "number" && data.count >= 0 ? Math.floor(data.count) : 0;
+        const slots = getDisplaySlots(count);
+
+        setRegisteredCount(count);
+        setSlotsRemaining(slots);
+        localStorage.setItem("xle_registered_count", count.toString());
+        localStorage.setItem("xle_slots_remaining", slots.toString());
+        logSlotsCheckpoint("sync", count, slots);
       } catch (error) {
         console.error("Failed to fetch registration count:", error);
       }
     };
+
     fetchCount();
   }, []);
 
