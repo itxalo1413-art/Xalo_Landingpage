@@ -26,6 +26,7 @@ const REFERRAL_SOURCES = new Set([
   'Từ Threads Xa Lộ English',
   'Từ TikTok Xa Lộ English',
   'Từ Instagram Xa Lộ English',
+  'Từ email',
   'Bạn bè giới thiệu',
   'Mục khác',
 ]);
