@@ -39,6 +39,22 @@ const INITIAL_SLOTS = 86;
 const FLOOR_SLOTS = 19;
 const RESET_SLOTS = 25;
 
+function resolveApiBaseUrl() {
+  const envBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL?.trim();
+  if (envBaseUrl) {
+    return envBaseUrl.replace(/\/+$/, "");
+  }
+
+  if (typeof window !== "undefined") {
+    const hostname = window.location.hostname;
+    if (hostname === "localhost" || hostname === "127.0.0.1") {
+      return "http://localhost:4000";
+    }
+  }
+
+  return null;
+}
+
 function getCycleResetStart(cycle: number) {
   return RESET_SLOTS;
 }
@@ -179,7 +195,10 @@ export default function Home() {
 
     setIsSubmitting(true);
     try {
-      const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:4000";
+      const baseUrl = resolveApiBaseUrl();
+      if (!baseUrl) {
+        throw new Error("Chưa cấu hình API backend. Vui lòng thiết lập NEXT_PUBLIC_API_BASE_URL.");
+      }
       const response = await fetch(`${baseUrl}/leads`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -234,7 +253,11 @@ export default function Home() {
     // Sync display slots with real lead count from backend
     const fetchCount = async () => {
       try {
-        const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:4000";
+        const baseUrl = resolveApiBaseUrl();
+        if (!baseUrl) {
+          console.warn("[Slots] Skip sync: NEXT_PUBLIC_API_BASE_URL is not configured");
+          return;
+        }
         const response = await fetch(`${baseUrl}/leads/count?t=${Date.now()}`);
         if (!response.ok) return;
 
@@ -248,7 +271,7 @@ export default function Home() {
         localStorage.setItem("xle_slots_remaining", slots.toString());
         logSlotsCheckpoint("sync", count, slots);
       } catch (error) {
-        console.error("Failed to fetch registration count:", error);
+        console.warn("[Slots] Failed to sync registration count:", error);
       }
     };
 
@@ -942,7 +965,7 @@ export default function Home() {
         </div>
       </footer>
 
-      <div className="fixed bottom-4 right-4 md:bottom-8 md:right-8 z-50 flex flex-col items-center gap-2 md:gap-3 group">
+      <div className="fixed bottom-4 right-4 md:bottom-8 md:right-8 z-50 flex flex-col items-center gap-2.5 md:gap-3 group">
         <div className="relative">
           {/* Decorative glow behind the label */}
           <div className="absolute -inset-1 bg-gradient-to-r from-xle-primary to-xle-accent rounded-full blur opacity-20 group-hover:opacity-40 transition-opacity duration-500" />
@@ -961,18 +984,20 @@ export default function Home() {
           target="_blank"
           rel="noreferrer"
           aria-label="Liên hệ Zalo"
-          className="flex h-14 w-14 md:h-18 md:w-18 items-center justify-center rounded-full bg-[#0068ff] text-[14px] md:text-[18px] font-bold text-white shadow-lg transition hover:scale-105"
+          className="relative flex h-14 w-14 md:h-16 md:w-16 items-center justify-center rounded-full bg-gradient-to-br from-[#1f82ff] to-[#0057ff] text-[13px] md:text-[15px] font-black text-white shadow-[0_12px_28px_rgba(0,104,255,0.42)] ring-2 ring-white/80 transition-all duration-300 hover:-translate-y-0.5 hover:scale-105 hover:shadow-[0_16px_34px_rgba(0,104,255,0.52)] active:scale-95"
         >
-          Zalo
+          <span className="absolute inset-0 rounded-full bg-white/15 opacity-0 transition-opacity duration-300 hover:opacity-100" />
+          <span className="relative tracking-tight">Zalo</span>
         </a>
         <a
           href="https://www.facebook.com/xalo.english"
           target="_blank"
           rel="noreferrer"
           aria-label="Liên hệ Facebook"
-          className="flex h-14 w-14 md:h-18 md:w-18 items-center justify-center rounded-full bg-[#1877f2] text-white shadow-lg transition hover:scale-105"
+          className="relative flex h-14 w-14 md:h-16 md:w-16 items-center justify-center rounded-full bg-gradient-to-br from-[#2a8cff] to-[#0e56e9] text-white shadow-[0_12px_28px_rgba(24,119,242,0.45)] ring-2 ring-white/80 transition-all duration-300 hover:-translate-y-0.5 hover:scale-105 hover:shadow-[0_16px_34px_rgba(24,119,242,0.55)] active:scale-95"
         >
-          <svg viewBox="0 0 24 24" className="h-8 w-8 md:h-10 md:w-10 fill-current" aria-hidden="true">
+          <span className="absolute inset-0 rounded-full bg-white/15 opacity-0 transition-opacity duration-300 hover:opacity-100" />
+          <svg viewBox="0 0 24 24" className="relative h-7 w-7 md:h-8 md:w-8 fill-current drop-shadow-sm" aria-hidden="true">
             <path d="M13.5 22v-8h2.7l.4-3h-3.1V9.1c0-.9.3-1.6 1.7-1.6h1.5V4.8c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4V11H8v3h2.5v8h3z" />
           </svg>
         </a>
