@@ -352,14 +352,14 @@ export default function Home() {
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4">
           {/* Left: Logo */}
           <div className="flex items-center gap-2 flex-shrink-0">
-            <Image 
+        <Image
               src="/Logo_XLE.svg" 
               alt="Xalo Logo" 
               width={40} 
               height={40} 
               className="h-8 w-8 md:h-10 md:w-10 object-contain"
-              priority
-            />
+          priority
+        />
             <img src="/XALO.ENGLISH.svg" alt="Xalo Logo" width={100} height={30} className="hidden sm:block h-6 w-auto" />
           </div>
 
@@ -410,7 +410,7 @@ export default function Home() {
             <h1 className="text-3xl font-extrabold leading-tight md:text-6xl text-foreground max-w-4xl mx-auto tracking-tight">
               Kiểm tra IELTS 4 kỹ năng – <br />
               <span className="text-xle-primary">nhận Bảng Chẩn Bệnh miễn phí</span>
-            </h1>
+          </h1>
             <p className="text-lg md:text-xl leading-relaxed text-xle-text-secondary max-w-2xl mx-auto font-medium">
               Đánh giá chuyên sâu trực tiếp bởi giáo viên, giúp bạn tối ưu lộ trình <br/> và sớm đạt band điểm mục tiêu.
             </p>
@@ -988,20 +988,20 @@ export default function Home() {
         >
           <span className="absolute inset-0 rounded-full bg-white/15 opacity-0 transition-opacity duration-300 hover:opacity-100" />
           <span className="relative tracking-tight">Zalo</span>
-        </a>
-        <a
+          </a>
+          <a
           href="https://www.facebook.com/xalo.english"
-          target="_blank"
+            target="_blank"
           rel="noreferrer"
           aria-label="Liên hệ Facebook"
           className="relative flex h-14 w-14 md:h-16 md:w-16 items-center justify-center rounded-full bg-gradient-to-br from-[#2a8cff] to-[#0e56e9] text-white shadow-[0_12px_28px_rgba(24,119,242,0.45)] ring-2 ring-white/80 transition-all duration-300 hover:-translate-y-0.5 hover:scale-105 hover:shadow-[0_16px_34px_rgba(24,119,242,0.55)] active:scale-95"
-        >
+          >
           <span className="absolute inset-0 rounded-full bg-white/15 opacity-0 transition-opacity duration-300 hover:opacity-100" />
           <svg viewBox="0 0 24 24" className="relative h-7 w-7 md:h-8 md:w-8 fill-current drop-shadow-sm" aria-hidden="true">
             <path d="M13.5 22v-8h2.7l.4-3h-3.1V9.1c0-.9.3-1.6 1.7-1.6h1.5V4.8c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4V11H8v3h2.5v8h3z" />
           </svg>
-        </a>
-      </div>
-    </main>
+          </a>
+        </div>
+      </main>
   );
 }

@@ -1,9 +1,15 @@
-import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  OnModuleInit,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { ConfigService } from '@nestjs/config';
 import { Model } from 'mongoose';
 import { Lead, LeadDocument } from './lead.schema';
 import { google } from 'googleapis';
+import * as fs from 'fs';
 import * as path from 'path';
 
 type CreateLeadDto = {
@@ -48,11 +54,38 @@ const normalizeCredential = (value: string) =>
     .trim();
 
 @Injectable()
-export class AppService {
+export class AppService implements OnModuleInit {
   constructor(
     @InjectModel(Lead.name) private readonly leadModel: Model<LeadDocument>,
     private readonly configService: ConfigService,
   ) {}
+
+  onModuleInit() {
+    const sheetId = this.configService.get<string>('GOOGLE_SHEET_ID');
+    const sheetTab = this.configService.get<string>('GOOGLE_SHEET_TAB') ?? 'Landing page';
+    const jsonFromEnv = this.configService.get<string>('GOOGLE_SERVICE_ACCOUNT_JSON');
+    const keyFile = path.join(process.cwd(), 'google-credentials.json');
+    const hasKeyFile = fs.existsSync(keyFile);
+
+    if (!sheetId) {
+      console.warn('[AppService] Sheet sync disabled: GOOGLE_SHEET_ID is missing');
+      return;
+    }
+
+    try {
+      const { credentials, source } = this.loadServiceAccountCredentials();
+      console.log(
+        `[AppService] Sheet sync ready: sheetId=${sheetId} tab="${sheetTab}" auth=${source} client=${credentials.client_email}`,
+      );
+    } catch (error) {
+      console.error('[AppService] Sheet sync config invalid:', error);
+      if (!jsonFromEnv?.trim() && !hasKeyFile) {
+        console.warn(
+          '[AppService] On Render: set GOOGLE_SERVICE_ACCOUNT_JSON (or GOOGLE_SERVICE_ACCOUNT_JSON_BASE64). File google-credentials.json is not deployed.',
+        );
+      }
+    }
+  }
 
   getHealth() {
     return { ok: true, service: 'xalo-landing-be' };
@@ -65,6 +98,7 @@ export class AppService {
   }
 
   async createLead(payload: CreateLeadDto) {
+    console.log('[AppService] POST /leads received');
     const fullName = payload.fullName?.trim();
     const phone = payload.phone?.trim();
     const email = payload.email?.trim().toLowerCase();
@@ -218,6 +252,81 @@ export class AppService {
     }));
   }
 
+  private parseServiceAccountJson(raw: string) {
+    const trimmed = raw.trim();
+    try {
+      return JSON.parse(trimmed);
+    } catch (firstError) {
+      // Render sometimes breaks multiline JSON; try minifying line breaks outside strings.
+      const compact = trimmed.replace(/\r\n/g, '\n').replace(/\n/g, '');
+      try {
+        return JSON.parse(compact);
+      } catch {
+        throw firstError;
+      }
+    }
+  }
+
+  private loadServiceAccountCredentials(): {
+    credentials: Record<string, string>;
+    source: 'env' | 'env_base64' | 'file';
+  } {
+    const jsonFromEnv = this.configService.get<string>('GOOGLE_SERVICE_ACCOUNT_JSON');
+    if (jsonFromEnv?.trim()) {
+      return {
+        credentials: this.parseServiceAccountJson(jsonFromEnv),
+        source: 'env',
+      };
+    }
+
+    const jsonBase64 = this.configService.get<string>('GOOGLE_SERVICE_ACCOUNT_JSON_BASE64');
+    if (jsonBase64?.trim()) {
+      const decoded = Buffer.from(jsonBase64.trim(), 'base64').toString('utf8');
+      return {
+        credentials: this.parseServiceAccountJson(decoded),
+        source: 'env_base64',
+      };
+    }
+
+    const keyFile = path.join(process.cwd(), 'google-credentials.json');
+    if (fs.existsSync(keyFile)) {
+      return {
+        credentials: JSON.parse(fs.readFileSync(keyFile, 'utf8')),
+        source: 'file',
+      };
+    }
+
+    throw new Error(
+      'Missing Google credentials. Set GOOGLE_SERVICE_ACCOUNT_JSON or GOOGLE_SERVICE_ACCOUNT_JSON_BASE64 on Render.',
+    );
+  }
+
+  private getGoogleAuth() {
+    const scopes = ['https://www.googleapis.com/auth/spreadsheets'];
+    const { credentials } = this.loadServiceAccountCredentials();
+    return new google.auth.GoogleAuth({ credentials, scopes });
+  }
+
+  private buildSheetRow(lead: any) {
+    const referral =
+      lead.referralSource + (lead.referralOther ? ` (${lead.referralOther})` : '');
+
+    // Column order aligned with sheet headers provided by team
+    return [
+      `'${lead.phone}`,
+      lead.email,
+      referral,
+      lead.currentLevel,
+      lead.targetAim,
+      lead.expectedExamTime || '',
+      lead.testMode,
+      lead.fullName,
+      lead.testDays,
+      lead.testTimeSlot,
+      lead.speakingSchedule,
+    ];
+  }
+
   private async syncToGoogleSheet(lead: any) {
     try {
       const sheetId = this.configService.get<string>('GOOGLE_SHEET_ID');
@@ -226,42 +335,21 @@ export class AppService {
         return;
       }
 
-      const auth = new google.auth.GoogleAuth({
-        keyFile: path.join(process.cwd(), 'google-credentials.json'),
-        scopes: ['https://www.googleapis.com/auth/spreadsheets'],
-      });
-
+      const sheetTab = this.configService.get<string>('GOOGLE_SHEET_TAB') ?? 'Landing page';
+      const auth = this.getGoogleAuth();
       const sheets = google.sheets({ version: 'v4', auth });
+      const row = this.buildSheetRow(lead);
+
       console.log(
-        `[AppService] Google Sheet sync started for lead=${lead._id?.toString?.() ?? 'unknown'}`,
+        `[AppService] Google Sheet sync started lead=${lead._id?.toString?.() ?? 'unknown'} tab="${sheetTab}" cols=${row.length}`,
       );
 
-      const values = [
-        [
-          new Date(lead.createdAt || Date.now()).toLocaleString('vi-VN', {
-            timeZone: 'Asia/Ho_Chi_Minh',
-          }),
-          lead.fullName,
-          `'${lead.phone}`, // Use tick to force string in Sheets (prevent losing leading zero)
-          lead.email,
-          lead.referralSource + (lead.referralOther ? ` (${lead.referralOther})` : ''),
-          lead.currentLevel,
-          lead.targetAim,
-          lead.expectedExamTime || '',
-          lead.testMode,
-          lead.testDays,
-          lead.testTimeSlot,
-          lead.speakingSchedule,
-        ],
-      ];
-
-      // We use 'Landing page!A1' to append to the specific sheet named "Landing page"
       await sheets.spreadsheets.values.append({
         spreadsheetId: sheetId,
-        range: 'Landing page!A1',
+        range: `${sheetTab}!A1`,
         valueInputOption: 'USER_ENTERED',
         requestBody: {
-          values,
+          values: [row],
         },
       });
 
