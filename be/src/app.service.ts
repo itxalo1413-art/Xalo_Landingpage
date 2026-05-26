@@ -316,20 +316,25 @@ export class AppService implements OnModuleInit {
   private buildSheetRow(lead: any) {
     const referral =
       lead.referralSource + (lead.referralOther ? ` (${lead.referralOther})` : '');
+    const timestamp = new Date(lead.createdAt || Date.now()).toLocaleString('vi-VN', {
+      timeZone: 'Asia/Ho_Chi_Minh',
+    });
 
-    // Column order aligned with sheet headers provided by team
+    // Column order matches Google Sheet headers
     return [
-      `'${lead.phone}`,
-      lead.email,
-      referral,
-      lead.currentLevel,
-      lead.targetAim,
-      lead.expectedExamTime || '',
-      lead.testMode,
-      lead.fullName,
-      lead.testDays,
-      lead.testTimeSlot,
-      lead.speakingSchedule,
+      timestamp, // Timestamp
+      lead.email, // Email Address
+      lead.fullName, // Họ & tên
+      `'${lead.phone}`, // Số điện thoại (Zalo)
+      lead.email, // Email của bạn
+      referral, // Bạn biết đến thông tin đăng ký qua đâu?
+      lead.currentLevel, // Trình độ hiện tại
+      lead.targetAim, // Mục tiêu (Aim)
+      lead.expectedExamTime || '', // Bạn dự kiến thi vào thời gian nào?
+      lead.testMode, // Hình thức test
+      lead.testDays, // Ngày làm bài test R-L-W
+      lead.testTimeSlot, // Khung giờ R-L-W
+      lead.speakingSchedule, // Thời gian Test Speaking 1:1
     ];
   }
 
