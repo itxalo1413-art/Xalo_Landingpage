@@ -61,9 +61,11 @@ export class AppService implements OnModuleInit {
   ) {}
 
   onModuleInit() {
-    const sheetId = this.configService.get<string>('GOOGLE_SHEET_ID');
-    const sheetTab = this.configService.get<string>('GOOGLE_SHEET_TAB') ?? 'Landing page';
-    const jsonFromEnv = this.configService.get<string>('GOOGLE_SERVICE_ACCOUNT_JSON');
+    console.log('[AppService] Sheet sync module v2 (env + env_base64)');
+
+    const sheetId = this.getEnv('GOOGLE_SHEET_ID');
+    const sheetTab = this.getEnv('GOOGLE_SHEET_TAB') ?? 'Landing page';
+    const jsonFromEnv = this.getEnv('GOOGLE_SERVICE_ACCOUNT_JSON');
     const keyFile = path.join(process.cwd(), 'google-credentials.json');
     const hasKeyFile = fs.existsSync(keyFile);
 
@@ -252,6 +254,10 @@ export class AppService implements OnModuleInit {
     }));
   }
 
+  private getEnv(key: string) {
+    return this.configService.get<string>(key) ?? process.env[key];
+  }
+
   private parseServiceAccountJson(raw: string) {
     const trimmed = raw.trim();
     try {
@@ -271,7 +277,7 @@ export class AppService implements OnModuleInit {
     credentials: Record<string, string>;
     source: 'env' | 'env_base64' | 'file';
   } {
-    const jsonFromEnv = this.configService.get<string>('GOOGLE_SERVICE_ACCOUNT_JSON');
+    const jsonFromEnv = this.getEnv('GOOGLE_SERVICE_ACCOUNT_JSON');
     if (jsonFromEnv?.trim()) {
       return {
         credentials: this.parseServiceAccountJson(jsonFromEnv),
@@ -279,7 +285,7 @@ export class AppService implements OnModuleInit {
       };
     }
 
-    const jsonBase64 = this.configService.get<string>('GOOGLE_SERVICE_ACCOUNT_JSON_BASE64');
+    const jsonBase64 = this.getEnv('GOOGLE_SERVICE_ACCOUNT_JSON_BASE64');
     if (jsonBase64?.trim()) {
       const decoded = Buffer.from(jsonBase64.trim(), 'base64').toString('utf8');
       return {
@@ -329,13 +335,13 @@ export class AppService implements OnModuleInit {
 
   private async syncToGoogleSheet(lead: any) {
     try {
-      const sheetId = this.configService.get<string>('GOOGLE_SHEET_ID');
+      const sheetId = this.getEnv('GOOGLE_SHEET_ID');
       if (!sheetId) {
         console.warn('[AppService] GOOGLE_SHEET_ID not found in config, skipping sync');
         return;
       }
 
-      const sheetTab = this.configService.get<string>('GOOGLE_SHEET_TAB') ?? 'Landing page';
+      const sheetTab = this.getEnv('GOOGLE_SHEET_TAB') ?? 'Landing page';
       const auth = this.getGoogleAuth();
       const sheets = google.sheets({ version: 'v4', auth });
       const row = this.buildSheetRow(lead);
