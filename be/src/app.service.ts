@@ -338,6 +338,19 @@ export class AppService implements OnModuleInit {
     ];
   }
 
+  private getLastPopulatedRow(rows: Array<Array<string | null | undefined>>) {
+    let lastPopulatedRow = 1; // keep header row
+
+    rows.forEach((row, index) => {
+      const hasAnyValue = row?.some((cell) => String(cell ?? '').trim() !== '');
+      if (hasAnyValue) {
+        lastPopulatedRow = index + 1;
+      }
+    });
+
+    return lastPopulatedRow;
+  }
+
   private async syncToGoogleSheet(lead: any) {
     try {
       const sheetId = this.getEnv('GOOGLE_SHEET_ID');
@@ -350,15 +363,20 @@ export class AppService implements OnModuleInit {
       const auth = this.getGoogleAuth();
       const sheets = google.sheets({ version: 'v4', auth });
       const row = this.buildSheetRow(lead);
+      const existingValues = await sheets.spreadsheets.values.get({
+        spreadsheetId: sheetId,
+        range: `${sheetTab}!A:M`,
+      });
+      const rows = existingValues.data.values ?? [];
+      const nextRow = this.getLastPopulatedRow(rows) + 1;
 
       console.log(
-        `[AppService] Google Sheet sync started lead=${lead._id?.toString?.() ?? 'unknown'} tab="${sheetTab}" cols=${row.length}`,
+        `[AppService] Google Sheet sync started lead=${lead._id?.toString?.() ?? 'unknown'} tab="${sheetTab}" row=${nextRow} cols=${row.length}`,
       );
 
-      await sheets.spreadsheets.values.append({
+      await sheets.spreadsheets.values.update({
         spreadsheetId: sheetId,
-        range: `${sheetTab}!A1`,
-        insertDataOption: 'INSERT_ROWS',
+        range: `${sheetTab}!A${nextRow}:M${nextRow}`,
         valueInputOption: 'USER_ENTERED',
         requestBody: {
           values: [row],
