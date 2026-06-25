@@ -358,6 +358,7 @@ export class AppService implements OnModuleInit {
       await sheets.spreadsheets.values.append({
         spreadsheetId: sheetId,
         range: `${sheetTab}!A1`,
+        insertDataOption: 'INSERT_ROWS',
         valueInputOption: 'USER_ENTERED',
         requestBody: {
           values: [row],
